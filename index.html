@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>交际德语教程 A2 · 前三单元练习题库</title>
+  <style>
+    :root {
+      --de: #2c5f8a;
+      --de-light: #e8f0f8;
+      --green: #2e7d32;
+      --green-light: #e8f5e9;
+      --red: #c62828;
+      --red-light: #ffebee;
+      --gold: #f57f17;
+      --gold-light: #fff8e1;
+      --gray: #546e7a;
+      --border: #cfd8dc;
+      --bg: #f5f7fa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: #263238;
+      line-height: 1.7;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a3a5c 0%, #2c5f8a 100%);
+      color: #fff;
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: .4rem; }
+    header p  { font-size: .95rem; opacity: .85; }
+
+    /* ── Nav tabs ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .5rem;
+      padding: 1rem 1rem .5rem;
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav button {
+      padding: .45rem 1.1rem;
+      border: 2px solid var(--de);
+      border-radius: 2rem;
+      background: #fff;
+      color: var(--de);
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    nav button:hover, nav button.active {
+      background: var(--de);
+      color: #fff;
+    }
+
+    /* ── Main layout ── */
+    main { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+    .unit { display: none; }
+    .unit.active { display: block; }
+
+    /* ── Section card ── */
+    .section {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 1.6rem;
+      overflow: hidden;
+    }
+    .section-header {
+      background: var(--de);
+      color: #fff;
+      padding: .75rem 1.2rem;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .section-body { padding: 1.2rem 1.4rem; }
+
+    /* ── Grammar rule box ── */
+    .rule-box {
+      background: var(--de-light);
+      border-left: 4px solid var(--de);
+      border-radius: 6px;
+      padding: .8rem 1rem;
+      margin-bottom: 1rem;
+      font-size: .93rem;
+    }
+    .rule-box strong { color: var(--de); }
+
+    /* ── Word bank ── */
+    .word-bank {
+      background: var(--gold-light);
+      border: 1px solid #ffe082;
+      border-radius: 8px;
+      padding: .7rem 1rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+    }
+
+    /* ── Fill-in questions ── */
+    .fill-list { list-style: none; }
+    .fill-list li {
+      padding: .55rem 0;
+      border-bottom: 1px dashed #eceff1;
+      font-size: .94rem;
+    }
+    .fill-list li:last-child { border-bottom: none; }
+    .zh { color: var(--gray); font-size: .85rem; margin-left: .3rem; }
+
+    input[type="text"] {
+      border: none;
+      border-bottom: 2px solid var(--de);
+      padding: 2px 6px;
+      font-size: .94rem;
+      min-width: 140px;
+      outline: none;
+      background: transparent;
+      transition: border-color .2s;
+    }
+    input[type="text"]:focus { border-color: var(--gold); }
+    input[type="text"].correct { border-color: var(--green); background: var(--green-light); }
+    input[type="text"].wrong   { border-color: var(--red);   background: var(--red-light); }
+
+    /* ── MCQ ── */
+    .mcq-list { list-style: none; }
+    .mcq-item { margin-bottom: 1.2rem; }
+    .mcq-item p { font-weight: 600; margin-bottom: .4rem; font-size: .94rem; }
+    .mcq-options { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .mcq-options label {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .35rem .8rem;
+      border: 2px solid var(--border);
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: .88rem;
+      transition: all .2s;
+      user-select: none;
+    }
+    .mcq-options label:hover { border-color: var(--de); background: var(--de-light); }
+    .mcq-options input[type="radio"] { display: none; }
+    .mcq-options label.selected { border-color: var(--de); background: var(--de-light); }
+    .mcq-options label.correct-ans { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 700; }
+    .mcq-options label.wrong-ans   { border-color: var(--red);   background: var(--red-light);   color: var(--red); }
+
+    /* ── Matching ── */
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .5rem 1.5rem;
+      font-size: .92rem;
+    }
+    .match-grid .col { display: flex; flex-direction: column; gap: .4rem; }
+    .match-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem .7rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .match-item select {
+      border: 1px solid var(--de);
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: .88rem;
+    }
+
+    /* ── Reading passage ── */
+    .passage {
+      background: #f9fbe7;
+      border-left: 4px solid #aed581;
+      border-radius: 6px;
+      padding: .9rem 1.1rem;
+      font-size: .93rem;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    /* ── Dialogue ── */
+    .dialogue {
+      background: #e3f2fd;
+      border-left: 4px solid #64b5f6;
+      border-radius: 6px;
+      padding: .9rem 1.1rem;
+      font-size: .92rem;
+      margin-bottom: 1rem;
+      line-height: 1.9;
+    }
+    .dialogue .sp { font-weight: 700; color: var(--de); }
+
+    /* ── Grammar table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+      margin: .8rem 0;
+    }
+    th {
+      background: var(--de);
+      color: #fff;
+      padding: .5rem .7rem;
+      text-align: left;
+    }
+    td {
+      padding: .45rem .7rem;
+      border-bottom: 1px solid var(--border);
+    }
+    tr:nth-child(even) td { background: var(--de-light); }
+    em { color: var(--de); font-style: normal; font-weight: 700; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      padding: .5rem 1.2rem;
+      border: none;
+      border-radius: 2rem;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: .8rem;
+      margin-right: .4rem;
+      transition: opacity .2s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-check   { background: var(--de);   color: #fff; }
+    .btn-show    { background: var(--gold);  color: #fff; }
+    .btn-reset   { background: #90a4ae;      color: #fff; }
+
+    /* ── Answer reveal ── */
+    .answer-box {
+      display: none;
+      background: var(--green-light);
+      border: 1px solid #a5d6a7;
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      margin-top: .8rem;
+      font-size: .9rem;
+    }
+    .answer-box.show { display: block; }
+    .answer-box strong { color: var(--green); }
+
+    /* ── Writing area ── */
+    textarea {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: .8rem;
+      font-size: .93rem;
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      transition: border-color .2s;
+    }
+    textarea:focus { border-color: var(--de); outline: none; }
+
+    /* ── Score badge ── */
+    .score-badge {
+      display: inline-block;
+      background: var(--de);
+      color: #fff;
+      border-radius: 2rem;
+      padding: .25rem .9rem;
+      font-size: .85rem;
+      font-weight: 700;
+      margin-left: .5rem;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap { background: #cfd8dc; border-radius: 4px; height: 6px; margin-bottom: .3rem; }
+    .progress-bar  { background: var(--de); height: 6px; border-radius: 4px; width: 0; transition: width .4s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 580px) {
+      .match-grid { grid-template-columns: 1fr; }
+      nav button { font-size: .8rem; padding: .4rem .9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>《交际德语教程（第二版）A2》</h1>
+  <p>前三单元互动练习题库 · Studio 21 A2</p>
+</header>
+
+<nav>
+  <button class="active" onclick="switchUnit(0)">第一单元<br><small>Leben &amp; lernen</small></button>
+  <button onclick="switchUnit(1)">第二单元<br><small>Familiengeschichten</small></button>
+  <button onclick="switchUnit(2)">第三单元<br><small>Unterwegs</small></button>
+  <button onclick="switchUnit(3)">综合测试</button>
+  <button onclick="switchUnit(4)">📖 语法专题<br><small>Grammatik aktiv</small></button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════
+     UNIT 1: Leben und lernen in Europa
+═══════════════════════════════════════════ -->
+<div class="unit active" id="unit-0">
+
+  <!-- 词汇填空 -->
+  <div class="section">
+    <div class="section-header">一、词汇填空</div>
+    <div class="section-body">
+      <div class="word-bank">
+        <strong>词库：</strong> Praktikum &nbsp;/&nbsp; Volkshochschule &nbsp;/&nbsp; Arbeitserlaubnis &nbsp;/&nbsp; Krise &nbsp;/&nbsp; Konzern &nbsp;/&nbsp; mobil &nbsp;/&nbsp; Sprachkurs &nbsp;/&nbsp; Grund
+      </div>
+      <ol class="fill-list" id="u1-fill">
+        <li>1. Er hat einen <input type="text" data-ans="Praktikum" /> bei einer großen Firma in Berlin gemacht. <span class="zh">（他在柏林一家大公司实习。）</span></li>
+        <li>2. Sie lernt Deutsch an der <input type="text" data-ans="Volkshochschule" />. <span class="zh">（她在市民大学学德语。）</span></li>
+        <li>3. Ohne <input type="text" data-ans="Arbeitserlaubnis" /> darf man in Deutschland nicht arbeiten. <span class="zh">（没有劳动许可证不能在德国工作。）</span></li>
+        <li>4. Viele Menschen haben wegen der <input type="text" data-ans="Krise" /> ihren Job verloren. <span class="zh">（很多人因为危机失业了。）</span></li>
+        <li>5. Der <input type="text" data-ans="Konzern" /> hat Niederlassungen in ganz Europa. <span class="zh">（这家集团在整个欧洲都有分公司。）</span></li>
+        <li>6. Ich hatte einen guten <input type="text" data-ans="Grund" /> dafür. <span class="zh">（我有充分的理由。）</span></li>
+        <li>7. Sie macht einen <input type="text" data-ans="Sprachkurs" /> in Wien. <span class="zh">（她在维也纳参加语言课程。）</span></li>
+        <li>8. Mit dem Laptop kann ich überall <input type="text" data-ans="mobil" /> arbeiten. <span class="zh">（我可以随时随地工作。）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u1-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u1-fill')">重置</button>
+      <div id="u1-fill-score"></div>
+    </div>
+  </div>
+
+  <!-- weil 从句 A 连句 -->
+  <div class="section">
+    <div class="section-header">二A、weil 从句——连句练习</div>
+    <div class="section-body">
+      <div class="rule-box">
+        <strong>规则：</strong>weil 引导的从句中，<strong>动词移至句末</strong>。<br>
+        例：Ich lerne Deutsch, <strong>weil</strong> ich in Deutschland arbeiten <strong>möchte</strong>.
+      </div>
+      <ol class="fill-list" id="u1-weil">
+        <li>1. Er ist nach München gezogen, <input type="text" data-ans="weil er dort eine Stelle gefunden hat" style="min-width:280px" />.</li>
+        <li>2. Sie lernt Spanisch, <input type="text" data-ans="weil ihr Freund aus Spanien kommt" style="min-width:280px" />.</li>
+        <li>3. Wir fahren nicht in Urlaub, <input type="text" data-ans="weil wir kein Geld haben" style="min-width:280px" />.</li>
+        <li>4. Ich gehe zur Volkshochschule, <input type="text" data-ans="weil ich meinen Deutschkurs abschließen möchte" style="min-width:300px" />.</li>
+        <li>5. Er hat das Praktikum abgebrochen, <input type="text" data-ans="weil ihm die Arbeit nicht gefallen hat" style="min-width:300px" />.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u1-weil')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('u1-weil-ans')">显示/隐藏答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u1-weil')">重置</button>
+      <div class="answer-box" id="u1-weil-ans">
+        <strong>参考答案：</strong><br>
+        1. weil er dort eine Stelle gefunden hat.<br>
+        2. weil ihr Freund aus Spanien kommt.<br>
+        3. weil wir kein Geld haben.<br>
+        4. weil ich meinen Deutschkurs abschließen möchte.<br>
+        5. weil ihm die Arbeit nicht gefallen hat.
+      </div>
+    </div>
+  </div>
+
+  <!-- weil 选择题 -->
+  <div class="section">
+    <div class="section-header">二B、weil 从句——选择题</div>
+    <div class="section-body">
+      <ul class="mcq-list" id="mcq-u1b">
+        <li class="mcq-item" data-ans="c">
+          <p>1. Ich lerne Deutsch, weil ich ________ in Deutschland ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u1b1" value="a">a) arbeiten möchte / —</label>
+            <label><input type="radio" name="u1b1" value="b">b) möchte arbeiten / —</label>
+            <label><input type="radio" name="u1b1" value="c">c) — / arbeiten möchte</label>
+            <label><input type="radio" name="u1b1" value="d">d) — / möchte arbeiten</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>2. Er hat Portugiesisch gelernt, weil er eine Portugiesin ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u1b2" value="a">a) heiraten hat</label>
+            <label><input type="radio" name="u1b2" value="b">b) geheiratet hat</label>
+            <label><input type="radio" name="u1b2" value="c">c) hat geheiratet</label>
+            <label><input type="radio" name="u1b2" value="d">d) heiratet hat</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>3. Sie ist mobil, weil sie ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u1b3" value="a">a) hat ein Auto</label>
+            <label><input type="radio" name="u1b3" value="b">b) ein Auto hat</label>
+            <label><input type="radio" name="u1b3" value="c">c) ein Auto haben</label>
+            <label><input type="radio" name="u1b3" value="d">d) hat ein Auto gehabt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Wir kommen zu spät, weil der Zug ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u1b4" value="a">a) hat Verspätung</label>
+            <label><input type="radio" name="u1b4" value="b">b) Verspätung hat</label>
+            <label><input type="radio" name="u1b4" value="c">c) Verspätung hatte gehabt</label>
+            <label><input type="radio" name="u1b4" value="d">d) hatte Verspätung gehabt</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-u1b')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-u1b')">重置</button>
+      <div id="mcq-u1b-score"></div>
+    </div>
+  </div>
+
+  <!-- 翻译 -->
+  <div class="section">
+    <div class="section-header">二C、weil 从句——中译德翻译</div>
+    <div class="section-body">
+      <ol style="padding-left:1.2rem;font-size:.93rem;line-height:2">
+        <li>她去维也纳是因为她在那里找到了一份工作。</li>
+        <li>我学德语是因为我想在德国生活。</li>
+        <li>他们不来参加聚会，因为他们很累。</li>
+        <li>我们搬到柏林是因为房租比较便宜。</li>
+      </ol>
+      <textarea id="u1-trans" placeholder="在此输入您的翻译…"></textarea>
+      <button class="btn btn-show" onclick="toggleAns('u1-trans-ans')">显示参考答案</button>
+      <div class="answer-box" id="u1-trans-ans">
+        <strong>参考答案：</strong><br>
+        1. Sie ist nach Wien gegangen, weil sie dort eine Stelle gefunden hat.<br>
+        2. Ich lerne Deutsch, weil ich in Deutschland leben möchte.<br>
+        3. Sie kommen nicht zur Party, weil sie müde sind.<br>
+        4. Wir sind nach Berlin gezogen, weil die Miete günstiger ist.
+      </div>
+    </div>
+  </div>
+
+  <!-- 阅读理解 -->
+  <div class="section">
+    <div class="section-header">三、阅读理解</div>
+    <div class="section-body">
+      <div class="passage">
+        Mein Name ist Carlos. Ich komme aus Spanien, aber ich lebe seit drei Jahren in Hamburg. Ich bin nach Deutschland gegangen, weil ich bei einem deutschen Konzern arbeiten wollte. Zuerst habe ich einen Sprachkurs an der Volkshochschule gemacht, weil mein Deutsch noch nicht gut genug war. Jetzt spreche ich gut Deutsch und arbeite als Ingenieur. Meine Frau ist auch nach Hamburg gezogen, weil sie hier eine Arbeitserlaubnis bekommen hat. Wir sind sehr zufrieden.
+      </div>
+      <ol class="fill-list" id="u1-read">
+        <li>1. Woher kommt Carlos? <input type="text" data-ans="Er kommt aus Spanien" style="min-width:220px" /></li>
+        <li>2. Warum ist er nach Deutschland gegangen? <input type="text" data-ans="Er wollte bei einem deutschen Konzern arbeiten" style="min-width:340px" /></li>
+        <li>3. Was hat er an der Volkshochschule gemacht? <input type="text" data-ans="Er hat einen Sprachkurs gemacht" style="min-width:260px" /></li>
+        <li>4. Was ist sein Beruf? <input type="text" data-ans="Er ist Ingenieur" style="min-width:160px" /></li>
+        <li>5. Warum ist seine Frau nach Hamburg gezogen? <input type="text" data-ans="weil sie dort eine Arbeitserlaubnis bekommen hat" style="min-width:340px" /></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u1-read')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('u1-read-ans')">显示参考答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u1-read')">重置</button>
+      <div class="answer-box" id="u1-read-ans">
+        <strong>参考答案：</strong><br>
+        1. Er kommt aus Spanien.<br>
+        2. Er wollte bei einem deutschen Konzern arbeiten.<br>
+        3. Er hat einen Sprachkurs gemacht.<br>
+        4. Er ist Ingenieur.<br>
+        5. Weil sie dort eine Arbeitserlaubnis bekommen hat.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /unit-0 -->
+
+
+<!-- ══════════════════════════════════════════
+     UNIT 2: Familiengeschichten
+═══════════════════════════════════════════ -->
+<div class="unit" id="unit-1">
+
+  <!-- 家庭成员 -->
+  <div class="section">
+    <div class="section-header">一A、家庭成员词汇填空</div>
+    <div class="section-body">
+      <ol class="fill-list" id="u2-fam">
+        <li>1. Die Mutter meines Vaters ist meine <input type="text" data-ans="Großmutter" />. <span class="zh">（祖母/外祖母）</span></li>
+        <li>2. Der Bruder meiner Mutter ist mein <input type="text" data-ans="Onkel" />. <span class="zh">（舅舅/叔叔）</span></li>
+        <li>3. Die Tochter meines Bruders ist meine <input type="text" data-ans="Nichte" />. <span class="zh">（侄女）</span></li>
+        <li>4. Der Sohn meiner Schwester ist mein <input type="text" data-ans="Neffe" />. <span class="zh">（外甥）</span></li>
+        <li>5. Die Eltern meines Mannes sind meine <input type="text" data-ans="Schwiegereltern" />. <span class="zh">（公婆/岳父母）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u2-fam')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u2-fam')">重置</button>
+      <div id="u2-fam-score"></div>
+    </div>
+  </div>
+
+  <!-- 词汇配对 -->
+  <div class="section">
+    <div class="section-header">一B、词汇配对</div>
+    <div class="section-body">
+      <div class="match-grid">
+        <div class="col">
+          <div class="match-item">1. die Enkeltochter <select data-ans="B" id="m2-1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">2. der Stiefvater <select data-ans="A" id="m2-2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">3. die Zwillinge <select data-ans="C" id="m2-3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">4. der Schwager <select data-ans="D" id="m2-4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">5. der Umzug <select data-ans="E" id="m2-5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+        </div>
+        <div class="col">
+          <div class="match-item">A. 继父</div>
+          <div class="match-item">B. 外孙女/孙女</div>
+          <div class="match-item">C. 双胞胎</div>
+          <div class="match-item">D. 姐夫/妹夫</div>
+          <div class="match-item">E. 搬家</div>
+        </div>
+      </div>
+      <button class="btn btn-check" onclick="checkMatch('m2',5)">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMatch('m2',5)">重置</button>
+      <div id="m2-score"></div>
+    </div>
+  </div>
+
+  <!-- Adjektive im Dativ -->
+  <div class="section">
+    <div class="section-header">二、第三格形容词词尾（Adjektive im Dativ）</div>
+    <div class="section-body">
+      <div class="rule-box">
+        <strong>规则：</strong>第三格中形容词词尾统一为 <strong>-en</strong>。
+      </div>
+      <table>
+        <tr><th>冠词类型</th><th>阳性 Dativ</th><th>阴性 Dativ</th><th>中性 Dativ</th><th>复数 Dativ</th></tr>
+        <tr><td>定冠词</td><td>dem alt<em>en</em> Mann</td><td>der jung<em>en</em> Frau</td><td>dem klein<em>en</em> Kind</td><td>den groß<em>en</em> Kindern</td></tr>
+        <tr><td>不定冠词</td><td>einem alt<em>en</em> Mann</td><td>einer jung<em>en</em> Frau</td><td>einem klein<em>en</em> Kind</td><td>—</td></tr>
+      </table>
+      <ol class="fill-list" id="u2-adj">
+        <li>1. Das ist der Mann mit der schwarz<input type="text" data-ans="en" style="min-width:50px" /> Hose.</li>
+        <li>2. Das ist die Frau mit den lang<input type="text" data-ans="en" style="min-width:50px" /> Haaren.</li>
+        <li>3. Ich spreche mit meinem alt<input type="text" data-ans="en" style="min-width:50px" /> Vater.</li>
+        <li>4. Er kommt mit seiner jung<input type="text" data-ans="en" style="min-width:50px" /> Schwester.</li>
+        <li>5. Das Kind spielt mit einem groß<input type="text" data-ans="en" style="min-width:50px" /> Hund.</li>
+        <li>6. Sie wohnt bei ihrer lieb<input type="text" data-ans="en" style="min-width:50px" /> Großmutter.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u2-adj')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u2-adj')">重置</button>
+      <div id="u2-adj-score"></div>
+    </div>
+  </div>
+
+  <!-- Possessivartikel im Dativ -->
+  <div class="section">
+    <div class="section-header">三、物主冠词第三格（Possessivartikel im Dativ）</div>
+    <div class="section-body">
+      <div class="rule-box">
+        <strong>参考表：</strong>第三格 mein → <strong>meinem</strong>（阳/中）/ <strong>meiner</strong>（阴）/ <strong>meinen</strong>（复数）
+      </div>
+      <table>
+        <tr><th></th><th>阳性/中性 Dativ</th><th>阴性 Dativ</th><th>复数 Dativ</th></tr>
+        <tr><td>mein-</td><td>meinem</td><td>meiner</td><td>meinen</td></tr>
+        <tr><td>sein-</td><td>seinem</td><td>seiner</td><td>seinen</td></tr>
+        <tr><td>ihr-</td><td>ihrem</td><td>ihrer</td><td>ihren</td></tr>
+        <tr><td>unser-</td><td>unserem</td><td>unserer</td><td>unseren</td></tr>
+      </table>
+      <ol class="fill-list" id="u2-poss">
+        <li>1. Das ist Jens mit <input type="text" data-ans="seiner" /> Schwester. <span class="zh">（seine Schwester）</span></li>
+        <li>2. Das bin ich mit <input type="text" data-ans="meinen" /> Großeltern. <span class="zh">（meine Großeltern — 复数）</span></li>
+        <li>3. Er ist mit <input type="text" data-ans="meiner" /> Großmutter im Urlaub. <span class="zh">（meine Großmutter）</span></li>
+        <li>4. Ich fahre mit <input type="text" data-ans="meinem" /> Bruder nach Wien. <span class="zh">（mein Bruder）</span></li>
+        <li>5. Sie wohnt bei <input type="text" data-ans="ihren" /> Eltern. <span class="zh">（ihre Eltern — 复数）</span></li>
+        <li>6. Wir gratulieren <input type="text" data-ans="unserem" /> Freund. <span class="zh">（unser Freund）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u2-poss')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u2-poss')">重置</button>
+      <div id="u2-poss-score"></div>
+    </div>
+  </div>
+
+  <!-- Verben mit Dativ 选择题 -->
+  <div class="section">
+    <div class="section-header">四、与第三格连用的动词（Verben mit Dativ）</div>
+    <div class="section-body">
+      <div class="rule-box">
+        <strong>常见动词：</strong> helfen · danken · gehören · gefallen · fehlen · passen · schmecken · antworten · glauben
+      </div>
+      <ul class="mcq-list" id="mcq-u2a">
+        <li class="mcq-item" data-ans="a">
+          <p>1. Ich ________ dir für deine Hilfe.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u2a1" value="a">a) danke</label>
+            <label><input type="radio" name="u2a1" value="b">b) helfe</label>
+            <label><input type="radio" name="u2a1" value="c">c) glaube</label>
+            <label><input type="radio" name="u2a1" value="d">d) fehle</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Das Buch ________ meiner Schwester. <span class="zh">（这本书是我姐姐的。）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u2a2" value="a">a) gehört</label>
+            <label><input type="radio" name="u2a2" value="b">b) gefällt</label>
+            <label><input type="radio" name="u2a2" value="c">c) hilft</label>
+            <label><input type="radio" name="u2a2" value="d">d) schmeckt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>3. Der Kuchen ________ mir sehr gut. <span class="zh">（这个蛋糕很好吃。）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u2a3" value="a">a) hilft</label>
+            <label><input type="radio" name="u2a3" value="b">b) schmeckt</label>
+            <label><input type="radio" name="u2a3" value="c">c) fehlt</label>
+            <label><input type="radio" name="u2a3" value="d">d) passt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Kannst du ________ helfen? <span class="zh">（能帮助我吗？）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u2a4" value="a">a) mich</label>
+            <label><input type="radio" name="u2a4" value="b">b) mir</label>
+            <label><input type="radio" name="u2a4" value="c">c) ich</label>
+            <label><input type="radio" name="u2a4" value="d">d) me</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>5. Das rote Kleid ________ ihr nicht. <span class="zh">（那条红裙子不适合她。）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u2a5" value="a">a) schmeckt</label>
+            <label><input type="radio" name="u2a5" value="b">b) gehört</label>
+            <label><input type="radio" name="u2a5" value="c">c) passt</label>
+            <label><input type="radio" name="u2a5" value="d">d) fehlt</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-u2a')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-u2a')">重置</button>
+      <div id="mcq-u2a-score"></div>
+    </div>
+  </div>
+
+  <!-- 第三格代词 -->
+  <div class="section">
+    <div class="section-header">五、填入正确的第三格人称代词</div>
+    <div class="section-body">
+      <div class="word-bank"><strong>词库：</strong> mir · dir · ihm · ihr · uns · euch · ihnen · Ihnen</div>
+      <ol class="fill-list" id="u2-pron">
+        <li>1. Kannst du <input type="text" data-ans="mir" /> bitte helfen? <span class="zh">（ich）</span></li>
+        <li>2. Das Essen schmeckt <input type="text" data-ans="ihm" /> sehr gut. <span class="zh">（er）</span></li>
+        <li>3. Wie geht es <input type="text" data-ans="dir" />? <span class="zh">（du）</span></li>
+        <li>4. Das gehört <input type="text" data-ans="ihnen" />. <span class="zh">（sie, Pl.）</span></li>
+        <li>5. Ich danke <input type="text" data-ans="Ihnen" /> sehr herzlich. <span class="zh">（Sie, formal）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u2-pron')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u2-pron')">重置</button>
+      <div id="u2-pron-score"></div>
+    </div>
+  </div>
+
+  <!-- 作文 -->
+  <div class="section">
+    <div class="section-header">六、综合写作——家庭故事</div>
+    <div class="section-body">
+      <p style="margin-bottom:.8rem;font-size:.93rem">请用德语写一段介绍你家庭的短文（约60字），要求：<br>
+      · 提到至少3位家庭成员 &nbsp;· 使用 mit + Dativ 描述外貌 &nbsp;· 使用至少1个 weil 从句</p>
+      <textarea id="u2-essay" placeholder="在此输入您的短文…"></textarea>
+      <button class="btn btn-show" onclick="toggleAns('u2-essay-ans')">显示参考范文</button>
+      <div class="answer-box" id="u2-essay-ans">
+        <strong>参考范文：</strong><br>
+        Meine Familie ist nicht sehr groß. Ich habe eine Schwester und einen Bruder. Meine Schwester ist Lehrerin. Sie wohnt jetzt in Shanghai, weil sie dort eine gute Stelle gefunden hat. Mein Bruder studiert noch. Das ist meine Großmutter mit dem langen weißen Haar — sie ist 80 Jahre alt, aber noch sehr fit!
+      </div>
+    </div>
+  </div>
+
+</div><!-- /unit-1 -->
+
+
+<!-- ══════════════════════════════════════════
+     UNIT 3: Unterwegs
+═══════════════════════════════════════════ -->
+<div class="unit" id="unit-2">
+
+  <!-- 词汇填空 -->
+  <div class="section">
+    <div class="section-header">一A、交通词汇填空</div>
+    <div class="section-body">
+      <div class="word-bank">
+        <strong>词库：</strong> der Bahnhof · das Gleis · die Verspätung · umsteigen · hin und zurück · einfach · der Zug · Fahrplan
+      </div>
+      <ol class="fill-list" id="u3-fill">
+        <li>1. Der <input type="text" data-ans="Zug" /> nach Berlin fährt um 14:30 Uhr ab. <span class="zh">（去柏林的火车14点半出发。）</span></li>
+        <li>2. Auf welchem <input type="text" data-ans="Gleis" /> fährt der ICE ab? <span class="zh">（ICE从几号站台出发？）</span></li>
+        <li>3. Ich möchte eine Fahrkarte <input type="text" data-ans="einfach" />, bitte. <span class="zh">（我想要一张单程票。）</span></li>
+        <li>4. In Mannheim müssen Sie <input type="text" data-ans="umsteigen" />. <span class="zh">（在曼海姆您需要换乘。）</span></li>
+        <li>5. Der Zug hat 20 Minuten <input type="text" data-ans="Verspätung" />. <span class="zh">（火车晚点20分钟。）</span></li>
+        <li>6. Ich möchte eine Karte <input type="text" data-ans="hin und zurück" />, bitte. <span class="zh">（我想要一张往返票。）</span></li>
+        <li>7. Haben Sie einen <input type="text" data-ans="Fahrplan" />? <span class="zh">（您有时刻表吗？）</span></li>
+        <li>8. Wann ist der nächste Zug zum <input type="text" data-ans="Bahnhof" />? <span class="zh">（下一班到车站的火车几点？）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u3-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u3-fill')">重置</button>
+      <div id="u3-fill-score"></div>
+    </div>
+  </div>
+
+  <!-- 词汇配对 -->
+  <div class="section">
+    <div class="section-header">一B、交通词汇配对</div>
+    <div class="section-body">
+      <div class="match-grid">
+        <div class="col">
+          <div class="match-item">1. die Haltestelle <select data-ans="B" id="m3-1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">2. das Flugticket <select data-ans="A" id="m3-2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">3. der Führerschein <select data-ans="D" id="m3-3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">4. der Koffer <select data-ans="C" id="m3-4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+          <div class="match-item">5. die Auskunft <select data-ans="E" id="m3-5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>
+        </div>
+        <div class="col">
+          <div class="match-item">A. 飞机票</div>
+          <div class="match-item">B. 公交站</div>
+          <div class="match-item">C. 行李箱</div>
+          <div class="match-item">D. 驾照</div>
+          <div class="match-item">E. 问讯处/信息</div>
+        </div>
+      </div>
+      <button class="btn btn-check" onclick="checkMatch('m3',5)">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMatch('m3',5)">重置</button>
+      <div id="m3-score"></div>
+    </div>
+  </div>
+
+  <!-- Präteritum Modalverben -->
+  <div class="section">
+    <div class="section-header">二A、情态动词过去时（Präteritum der Modalverben）</div>
+    <div class="section-body">
+      <table>
+        <tr><th>动词</th><th>Präsens</th><th>Präteritum</th></tr>
+        <tr><td>können</td><td>kann</td><td><em>konnte</em></td></tr>
+        <tr><td>müssen</td><td>muss</td><td><em>musste</em></td></tr>
+        <tr><td>wollen</td><td>will</td><td><em>wollte</em></td></tr>
+        <tr><td>dürfen</td><td>darf</td><td><em>durfte</em></td></tr>
+        <tr><td>sollen</td><td>soll</td><td><em>sollte</em></td></tr>
+        <tr><td>mögen</td><td>mag</td><td><em>mochte</em></td></tr>
+      </table>
+      <ol class="fill-list" id="u3-prat">
+        <li>1. Als Kind <input type="text" data-ans="durfte" /> (dürfen) ich nicht lange aufbleiben.</li>
+        <li>2. Er <input type="text" data-ans="musste" /> (müssen) gestern früh aufstehen.</li>
+        <li>3. Sie <input type="text" data-ans="wollte" /> (wollen) nach Paris fahren, aber der Flug war zu teuer.</li>
+        <li>4. Wir <input type="text" data-ans="konnten" /> (können) das Museum nicht besuchen.</li>
+        <li>5. Ich <input type="text" data-ans="sollte" /> (sollen) um 10 Uhr da sein.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u3-prat')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u3-prat')">重置</button>
+      <div id="u3-prat-score"></div>
+    </div>
+  </div>
+
+  <!-- Präteritum 选择题 -->
+  <div class="section">
+    <div class="section-header">二B、情态动词过去时——选择题</div>
+    <div class="section-body">
+      <ul class="mcq-list" id="mcq-u3b">
+        <li class="mcq-item" data-ans="b">
+          <p>1. Gestern ________ ich den Bus nehmen, weil mein Auto kaputt war.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3b1" value="a">a) muss</label>
+            <label><input type="radio" name="u3b1" value="b">b) musste</label>
+            <label><input type="radio" name="u3b1" value="c">c) mussten</label>
+            <label><input type="radio" name="u3b1" value="d">d) müsste</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>2. Als Kind ________ sie nicht allein reisen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3b2" value="a">a) darf</label>
+            <label><input type="radio" name="u3b2" value="b">b) durfte</label>
+            <label><input type="radio" name="u3b2" value="c">c) durfen</label>
+            <label><input type="radio" name="u3b2" value="d">d) dürfte</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>3. Er ________ unbedingt nach Berlin fahren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3b3" value="a">a) wollte</label>
+            <label><input type="radio" name="u3b3" value="b">b) wollen</label>
+            <label><input type="radio" name="u3b3" value="c">c) will</label>
+            <label><input type="radio" name="u3b3" value="d">d) gewollt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Wir ________ lange warten, weil der Zug Verspätung hatte.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3b4" value="a">a) können</label>
+            <label><input type="radio" name="u3b4" value="b">b) mussten</label>
+            <label><input type="radio" name="u3b4" value="c">c) durfte</label>
+            <label><input type="radio" name="u3b4" value="d">d) sollte</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-u3b')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-u3b')">重置</button>
+      <div id="mcq-u3b-score"></div>
+    </div>
+  </div>
+
+  <!-- Konjunktiv II -->
+  <div class="section">
+    <div class="section-header">三A、第二虚拟式（Konjunktiv II）礼貌改写</div>
+    <div class="section-body">
+      <div class="rule-box">
+        <strong>示例：</strong> Geben Sie mir bitte ein Ticket. → <strong>Könnten</strong> Sie mir bitte ein Ticket <strong>geben</strong>?
+      </div>
+      <ol class="fill-list" id="u3-konj">
+        <li>1. Sagen Sie mir, wo der Bahnhof ist.<br>→ <input type="text" data-ans="Könnten" style="min-width:100px"/> Sie mir sagen, wo der Bahnhof ist?</li>
+        <li>2. Ich will einen Fensterplatz.<br>→ Ich <input type="text" data-ans="möchte" style="min-width:100px"/> gern einen Fensterplatz.</li>
+        <li>3. Helfen Sie mir bitte!<br>→ <input type="text" data-ans="Könnten" style="min-width:100px"/> Sie mir bitte helfen?</li>
+        <li>4. Ich will eine Fahrkarte nach München kaufen.<br>→ Ich <input type="text" data-ans="würde" style="min-width:100px"/> gern eine Fahrkarte nach München kaufen.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u3-konj')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('u3-konj-ans')">显示参考答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u3-konj')">重置</button>
+      <div class="answer-box" id="u3-konj-ans">
+        <strong>参考答案：</strong><br>
+        1. Könnten Sie mir sagen…<br>
+        2. möchte / hätte<br>
+        3. Könnten Sie mir bitte helfen?<br>
+        4. würde gern / möchte gern
+      </div>
+    </div>
+  </div>
+
+  <!-- Konjunktiv II 选择题 -->
+  <div class="section">
+    <div class="section-header">三B、第二虚拟式——选择题</div>
+    <div class="section-body">
+      <ul class="mcq-list" id="mcq-u3c">
+        <li class="mcq-item" data-ans="b">
+          <p>1. ________ Sie mir bitte helfen?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3c1" value="a">a) Können</label>
+            <label><input type="radio" name="u3c1" value="b">b) Könnten</label>
+            <label><input type="radio" name="u3c1" value="c">c) Konnten</label>
+            <label><input type="radio" name="u3c1" value="d">d) Konnte</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Ich ________ gern ein Zimmer reservieren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3c2" value="a">a) möchte</label>
+            <label><input type="radio" name="u3c2" value="b">b) mochte</label>
+            <label><input type="radio" name="u3c2" value="c">c) mögen</label>
+            <label><input type="radio" name="u3c2" value="d">d) wollte</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>3. ________ du morgen Zeit? <span class="zh">（礼貌询问）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3c3" value="a">a) Hast</label>
+            <label><input type="radio" name="u3c3" value="b">b) Hattest</label>
+            <label><input type="radio" name="u3c3" value="c">c) Hättest</label>
+            <label><input type="radio" name="u3c3" value="d">d) Haben</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>4. Es ________ schön, wenn du mitkommst.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="u3c4" value="a">a) ist</label>
+            <label><input type="radio" name="u3c4" value="b">b) war</label>
+            <label><input type="radio" name="u3c4" value="c">c) wäre</label>
+            <label><input type="radio" name="u3c4" value="d">d) würde</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-u3c')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-u3c')">重置</button>
+      <div id="mcq-u3c-score"></div>
+    </div>
+  </div>
+
+  <!-- 对话理解 -->
+  <div class="section">
+    <div class="section-header">四、情景对话——在车站买票</div>
+    <div class="section-body">
+      <div class="dialogue">
+        <p><span class="sp">Kunde:</span> Guten Tag! Ich möchte eine Fahrkarte nach Wien kaufen.</p>
+        <p><span class="sp">Beamtin:</span> Einfach oder hin und zurück?</p>
+        <p><span class="sp">Kunde:</span> Hin und zurück, bitte. Wann fährt der nächste Zug ab?</p>
+        <p><span class="sp">Beamtin:</span> Der nächste Zug fährt um 13:45 Uhr ab. Er kommt um 18:20 Uhr in Wien an. Sie müssen in Salzburg umsteigen.</p>
+        <p><span class="sp">Kunde:</span> Gibt es einen direkten Zug?</p>
+        <p><span class="sp">Beamtin:</span> Ja, aber der Direktzug fährt erst um 15:30 Uhr ab.</p>
+        <p><span class="sp">Kunde:</span> Dann nehme ich den um 13:45 Uhr. Was kostet die Fahrkarte?</p>
+        <p><span class="sp">Beamtin:</span> Das macht 89 Euro.</p>
+        <p><span class="sp">Kunde:</span> Könnten Sie mir sagen, auf welchem Gleis der Zug abfährt?</p>
+        <p><span class="sp">Beamtin:</span> Gleis 7.</p>
+      </div>
+      <ol class="fill-list" id="u3-read">
+        <li>1. Wohin möchte der Kunde fahren? <input type="text" data-ans="Er möchte nach Wien fahren" style="min-width:240px"/></li>
+        <li>2. Welche Art Fahrkarte kauft er? <input type="text" data-ans="Hin und zurück" style="min-width:160px"/></li>
+        <li>3. Wann fährt der erste Zug ab? <input type="text" data-ans="Um 13:45 Uhr" style="min-width:140px"/></li>
+        <li>4. Wo muss er umsteigen? <input type="text" data-ans="In Salzburg" style="min-width:120px"/></li>
+        <li>5. Was kostet die Fahrkarte? <input type="text" data-ans="89 Euro" style="min-width:100px"/></li>
+        <li>6. Auf welchem Gleis fährt der Zug ab? <input type="text" data-ans="Gleis 7" style="min-width:100px"/></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('u3-read')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('u3-read-ans')">显示参考答案</button>
+      <button class="btn btn-reset" onclick="resetFill('u3-read')">重置</button>
+      <div class="answer-box" id="u3-read-ans">
+        <strong>参考答案：</strong><br>
+        1. Er möchte nach Wien fahren.<br>
+        2. Hin und zurück.<br>
+        3. Um 13:45 Uhr.<br>
+        4. In Salzburg.<br>
+        5. 89 Euro.<br>
+        6. Gleis 7.
+      </div>
+    </div>
+  </div>
+
+  <!-- 翻译 -->
+  <div class="section">
+    <div class="section-header">五、中译德翻译练习</div>
+    <div class="section-body">
+      <ol style="padding-left:1.2rem;font-size:.93rem;line-height:2.1">
+        <li>请问下一班去汉堡的火车几点出发？</li>
+        <li>我需要在科隆换乘。</li>
+        <li>请给我一张到慕尼黑的往返票。</li>
+        <li>火车晚点了半个小时。</li>
+        <li>您能告诉我去火车站怎么走吗？</li>
+        <li>昨天我必须很早起床，因为我的火车7点就出发了。</li>
+        <li>作为孩子，他不被允许独自旅行。</li>
+        <li>我想预订一个靠窗的座位。</li>
+      </ol>
+      <textarea id="u3-trans" placeholder="在此输入您的翻译…"></textarea>
+      <button class="btn btn-show" onclick="toggleAns('u3-trans-ans')">显示参考答案</button>
+      <div class="answer-box" id="u3-trans-ans">
+        <strong>参考答案：</strong><br>
+        1. Wann fährt der nächste Zug nach Hamburg ab?<br>
+        2. Ich muss in Köln umsteigen.<br>
+        3. Ich möchte eine Fahrkarte nach München hin und zurück, bitte.<br>
+        4. Der Zug hat eine halbe Stunde Verspätung.<br>
+        5. Könnten Sie mir sagen, wie ich zum Bahnhof komme?<br>
+        6. Gestern musste ich sehr früh aufstehen, weil mein Zug um 7 Uhr abfuhr.<br>
+        7. Als Kind durfte er nicht allein reisen.<br>
+        8. Ich möchte / hätte gern einen Fensterplatz reservieren.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /unit-2 -->
+
+
+<!-- ══════════════════════════════════════════
+     综合测试
+═══════════════════════════════════════════ -->
+<div class="unit" id="unit-3">
+
+  <div class="section">
+    <div class="section-header">综合选择题（共20题）</div>
+    <div class="section-body">
+      <ul class="mcq-list" id="mcq-final">
+
+        <li class="mcq-item" data-ans="a">
+          <p>1. Ich bin nach Deutschland gegangen, ________ ich dort Arbeit gefunden habe.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f1" value="a">a) weil</label>
+            <label><input type="radio" name="f1" value="b">b) dass</label>
+            <label><input type="radio" name="f1" value="c">c) wenn</label>
+            <label><input type="radio" name="f1" value="d">d) ob</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>2. Er hat Deutsch gelernt, weil er in Wien ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f2" value="a">a) wohnen möchte</label>
+            <label><input type="radio" name="f2" value="b">b) möchte wohnen</label>
+            <label><input type="radio" name="f2" value="c">c) wohnen hat</label>
+            <label><input type="radio" name="f2" value="d">d) hat gewohnt</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>3. Das ist die Frau mit den lang________ Haaren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f3" value="a">a) -e</label>
+            <label><input type="radio" name="f3" value="b">b) -er</label>
+            <label><input type="radio" name="f3" value="c">c) -en</label>
+            <label><input type="radio" name="f3" value="d">d) -em</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>4. Er kommt mit sein________ Bruder. （der Bruder, Dativ）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f4" value="a">a) -er</label>
+            <label><input type="radio" name="f4" value="b">b) -en</label>
+            <label><input type="radio" name="f4" value="c">c) -em</label>
+            <label><input type="radio" name="f4" value="d">d) -e</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>5. Ich danke ________ für die Einladung. （Sie, Dativ formal）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f5" value="a">a) Sie</label>
+            <label><input type="radio" name="f5" value="b">b) Ihnen</label>
+            <label><input type="radio" name="f5" value="c">c) Ihren</label>
+            <label><input type="radio" name="f5" value="d">d) ihr</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>6. Das Essen ________ mir sehr gut.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f6" value="a">a) helft</label>
+            <label><input type="radio" name="f6" value="b">b) gefällt</label>
+            <label><input type="radio" name="f6" value="c">c) dankt</label>
+            <label><input type="radio" name="f6" value="d">d) passt</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>7. Als Kind ________ ich nicht viel Süßes essen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f7" value="a">a) darf</label>
+            <label><input type="radio" name="f7" value="b">b) dürfte</label>
+            <label><input type="radio" name="f7" value="c">c) durfte</label>
+            <label><input type="radio" name="f7" value="d">d) dürfen</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>8. Wir ________ gestern lange warten, weil der Zug Verspätung hatte.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f8" value="a">a) müssen</label>
+            <label><input type="radio" name="f8" value="b">b) mussten</label>
+            <label><input type="radio" name="f8" value="c">c) müssten</label>
+            <label><input type="radio" name="f8" value="d">d) gemüssen</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>9. ________ Sie mir bitte sagen, wo der Bahnhof ist?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f9" value="a">a) Können</label>
+            <label><input type="radio" name="f9" value="b">b) Konnten</label>
+            <label><input type="radio" name="f9" value="c">c) Könnten</label>
+            <label><input type="radio" name="f9" value="d">d) Konnte</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>10. Ich ________ gern ein Ticket nach Hamburg kaufen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f10" value="a">a) wäre</label>
+            <label><input type="radio" name="f10" value="b">b) hätte</label>
+            <label><input type="radio" name="f10" value="c">c) möchte</label>
+            <label><input type="radio" name="f10" value="d">d) sollte</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>11. Der Zug fährt auf Gleis ________ ab.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f11" value="a">a) fünfte</label>
+            <label><input type="radio" name="f11" value="b">b) fünften</label>
+            <label><input type="radio" name="f11" value="c">c) fünf</label>
+            <label><input type="radio" name="f11" value="d">d) fünftem</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>12. In Frankfurt ________ ich nach Köln umsteigen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f12" value="a">a) muss</label>
+            <label><input type="radio" name="f12" value="b">b) sollte</label>
+            <label><input type="radio" name="f12" value="c">c) darf</label>
+            <label><input type="radio" name="f12" value="d">d) mag</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>13. Ich arbeite bei einem großen ________ in München.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f13" value="a">a) Krise</label>
+            <label><input type="radio" name="f13" value="b">b) Konzern</label>
+            <label><input type="radio" name="f13" value="c">c) Praktikum</label>
+            <label><input type="radio" name="f13" value="d">d) Volkshochschule</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>14. Die Enkeltochter ist die ________ meines Sohnes.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f14" value="a">a) Nichte</label>
+            <label><input type="radio" name="f14" value="b">b) Schwester</label>
+            <label><input type="radio" name="f14" value="c">c) Tochter</label>
+            <label><input type="radio" name="f14" value="d">d) Schwägerin</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>15. Ich fahre mit mein________ Eltern in Urlaub. （Plural, Dativ）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f15" value="a">a) -em</label>
+            <label><input type="radio" name="f15" value="b">b) -er</label>
+            <label><input type="radio" name="f15" value="c">c) -en</label>
+            <label><input type="radio" name="f15" value="d">d) -e</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>16. Sie hat ein Praktikum gemacht, ________ sie Erfahrung sammeln wollte.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f16" value="a">a) dass</label>
+            <label><input type="radio" name="f16" value="b">b) wenn</label>
+            <label><input type="radio" name="f16" value="c">c) weil</label>
+            <label><input type="radio" name="f16" value="d">d) ob</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>17. ________ kostet die Fahrkarte?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f17" value="a">a) Was</label>
+            <label><input type="radio" name="f17" value="b">b) Wie</label>
+            <label><input type="radio" name="f17" value="c">c) Wann</label>
+            <label><input type="radio" name="f17" value="d">d) Wohin</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>18. Der Zug ________ um 17:00 Uhr in Berlin an.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f18" value="a">a) abfährt</label>
+            <label><input type="radio" name="f18" value="b">b) kommt…an</label>
+            <label><input type="radio" name="f18" value="c">c) fährt ab</label>
+            <label><input type="radio" name="f18" value="d">d) ankommen</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>19. Ich ________ gern einen Platz am Fenster reservieren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f19" value="a">a) wäre</label>
+            <label><input type="radio" name="f19" value="b">b) hätte</label>
+            <label><input type="radio" name="f19" value="c">c) würde</label>
+            <label><input type="radio" name="f19" value="d">d) könnte</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>20. Das Ticket ________ mir sehr gut. <span class="zh">（它让我很满意）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="f20" value="a">a) gefällt</label>
+            <label><input type="radio" name="f20" value="b">b) schmeckt</label>
+            <label><input type="radio" name="f20" value="c">c) passt</label>
+            <label><input type="radio" name="f20" value="d">d) hilft</label>
+          </div>
+        </li>
+
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-final')">提交测试</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-final')">重置</button>
+      <div id="mcq-final-score"></div>
+    </div>
+  </div>
+
+  <!-- 综合作文 -->
+  <div class="section">
+    <div class="section-header">综合作文——旅行邮件</div>
+    <div class="section-body">
+      <p style="margin-bottom:.8rem;font-size:.93rem">请用德语写一封短邮件（约80字），向朋友介绍你最近一次旅行，需包含：<br>
+      · 去了哪里，<strong>weil</strong> 原因句 &nbsp;· 交通方式 &nbsp;· 情态动词过去时 &nbsp;· 对旅行的感受</p>
+      <textarea id="final-essay" placeholder="在此输入您的邮件…"></textarea>
+      <button class="btn btn-show" onclick="toggleAns('final-essay-ans')">显示参考范文</button>
+      <div class="answer-box" id="final-essay-ans">
+        <strong>参考范文：</strong><br>
+        Hallo Mia,<br><br>
+        letztes Wochenende bin ich nach Hamburg gefahren, weil meine Freundin dort ihren Geburtstag gefeiert hat. Ich habe den Zug genommen. Leider hatte der Zug 30 Minuten Verspätung und ich musste in Hannover umsteigen. In Hamburg hatten wir viel Spaß. Ich hätte gern länger bleiben wollen, aber ich musste am Montag wieder arbeiten.<br><br>
+        Viele Grüße, Anna
+      </div>
+    </div>
+  </div>
+
+</div><!-- /unit-3 -->
+
+
+<!-- ══════════════════════════════════════════
+     UNIT 4: 语法专题 · Grammatik aktiv A2
+     参照 Grammatik aktiv A1–B1（Cornelsen）风格
+     共 6 个专题，约 50 道练习题
+═══════════════════════════════════════════ -->
+<div class="unit" id="unit-4">
+
+  <!-- ── 页眉说明 ── -->
+  <div class="section" style="background:linear-gradient(135deg,#1a3a5c,#2c5f8a);color:#fff;border-radius:12px;margin-bottom:1.6rem;">
+    <div class="section-body" style="padding:1.2rem 1.5rem;">
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:.4rem;">📖 Grammatik aktiv A1–B1 · A2 语法专题</div>
+      <div style="font-size:.9rem;opacity:.88;">本页语法规则与练习参照 <em>Grammatik aktiv A1–B1</em>（Friederike Jin / Ute Voß，Cornelsen）编写，与前三单元交际德语教程内容精准对应。共 <strong>6 个语法专题 · 50 道练习题</strong>。</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题一：weil 从句
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题一：weil 从句（Kausalsatz mit „weil"）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 46 章）</strong><br>
+        <strong>weil</strong> 引导原因从句，<strong>动词移至从句句末</strong>。<br>
+        <table style="margin:.6rem 0 0">
+          <tr><th>主句</th><th>连接词</th><th>从句（动词末位）</th></tr>
+          <tr><td>Ich lerne Deutsch,</td><td><em>weil</em></td><td>ich in Deutschland arbeiten <em>möchte</em>.</td></tr>
+          <tr><td>Er ist müde,</td><td><em>weil</em></td><td>er lange gearbeitet <em>hat</em>.</td></tr>
+          <tr><td>Sie bleibt zu Hause,</td><td><em>weil</em></td><td>sie krank <em>ist</em>.</td></tr>
+        </table>
+        ⚠️ <strong>注意：</strong>情态动词放最后：weil er kommen <strong>muss</strong>（不是 muss kommen）
+      </div>
+
+      <!-- 1A 从句词序选择题 5题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">1A · 词序判断（选出正确的 weil 从句）</div>
+      <ul class="mcq-list" id="mcq-g1a">
+        <li class="mcq-item" data-ans="b">
+          <p>1. Ich gehe nicht aus, weil ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g1a1" value="a">a) ich bin krank</label>
+            <label><input type="radio" name="g1a1" value="b">b) ich krank bin</label>
+            <label><input type="radio" name="g1a1" value="c">c) bin ich krank</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>2. Er lernt Spanisch, weil ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g1a2" value="a">a) er will nach Spanien fahren</label>
+            <label><input type="radio" name="g1a2" value="b">b) er fährt nach Spanien</label>
+            <label><input type="radio" name="g1a2" value="c">c) er nach Spanien fahren will</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>3. Wir kommen zu spät, weil ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g1a3" value="a">a) der Zug Verspätung hat</label>
+            <label><input type="radio" name="g1a3" value="b">b) hat der Zug Verspätung</label>
+            <label><input type="radio" name="g1a3" value="c">c) der Zug hat Verspätung</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Sie macht einen Sprachkurs, weil ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g1a4" value="a">a) ihr Deutsch ist nicht gut genug</label>
+            <label><input type="radio" name="g1a4" value="b">b) ihr Deutsch nicht gut genug ist</label>
+            <label><input type="radio" name="g1a4" value="c">c) nicht gut genug ist ihr Deutsch</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>5. Er hat das Praktikum abgebrochen, weil ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g1a5" value="a">a) ihm hat die Arbeit nicht gefallen</label>
+            <label><input type="radio" name="g1a5" value="b">b) die Arbeit nicht gefallen hat ihm</label>
+            <label><input type="radio" name="g1a5" value="c">c) ihm die Arbeit nicht gefallen hat</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g1a')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g1a')">重置</button>
+      <div id="mcq-g1a-score"></div>
+
+      <!-- 1B 连句填空 5题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">1B · 连句练习（将两句合并为 weil 从句，填入从句部分）</div>
+      <div class="word-bank"><strong>提示：</strong>请将括号内的原因句改写为 weil 从句填入横线。</div>
+      <ol class="fill-list" id="g1b-fill">
+        <li>1. Ich fahre in die Stadt, <input type="text" data-ans="weil ich Lebensmittel kaufen muss" style="min-width:300px"/>. <span class="zh">（ich muss Lebensmittel kaufen）</span></li>
+        <li>2. Sie ist glücklich, <input type="text" data-ans="weil sie eine neue Stelle gefunden hat" style="min-width:320px"/>. <span class="zh">（sie hat eine neue Stelle gefunden）</span></li>
+        <li>3. Wir bleiben zu Hause, <input type="text" data-ans="weil es draußen regnet" style="min-width:280px"/>. <span class="zh">（es regnet draußen）</span></li>
+        <li>4. Er kann nicht kommen, <input type="text" data-ans="weil er arbeiten muss" style="min-width:260px"/>. <span class="zh">（er muss arbeiten）</span></li>
+        <li>5. Ich nehme den Bus, <input type="text" data-ans="weil mein Auto kaputt ist" style="min-width:280px"/>. <span class="zh">（mein Auto ist kaputt）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g1b-fill')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('g1b-ans')">显示答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g1b-fill')">重置</button>
+      <div class="answer-box" id="g1b-ans">
+        <strong>参考答案：</strong><br>
+        1. weil ich Lebensmittel kaufen muss.<br>
+        2. weil sie eine neue Stelle gefunden hat.<br>
+        3. weil es draußen regnet.<br>
+        4. weil er arbeiten muss.<br>
+        5. weil mein Auto kaputt ist.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题二：第三格形容词词尾
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题二：第三格形容词词尾（Adjektive im Dativ）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 32 章）</strong><br>
+        第三格（Dativ）中，<strong>所有形容词词尾统一为 -en</strong>。<br>
+        <table style="margin:.5rem 0 0">
+          <tr><th></th><th>阳性 m.</th><th>阴性 f.</th><th>中性 n.</th><th>复数 Pl.</th></tr>
+          <tr><td><strong>定冠词</strong></td><td>dem alt<em>en</em> Mann</td><td>der jung<em>en</em> Frau</td><td>dem klein<em>en</em> Kind</td><td>den groß<em>en</em> Kindern</td></tr>
+          <tr><td><strong>不定冠词</strong></td><td>einem alt<em>en</em> Mann</td><td>einer jung<em>en</em> Frau</td><td>einem klein<em>en</em> Kind</td><td>—</td></tr>
+          <tr><td><strong>物主冠词</strong></td><td>meinem alt<em>en</em> Vater</td><td>meiner jung<em>en</em> Mutter</td><td>meinem klein<em>en</em> Kind</td><td>meinen groß<em>en</em> Kindern</td></tr>
+        </table>
+        ✅ <strong>记忆口诀：</strong>第三格形容词，永远 -en 结尾！
+      </div>
+
+      <!-- 2A 选择题 5题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">2A · 选出正确词尾</div>
+      <ul class="mcq-list" id="mcq-g2a">
+        <li class="mcq-item" data-ans="b">
+          <p>1. Er spricht mit sein<b>__</b> alt<b>__</b> Vater. （der Vater, Dativ）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g2a1" value="a">a) seinem … altem</label>
+            <label><input type="radio" name="g2a1" value="b">b) seinem … alten</label>
+            <label><input type="radio" name="g2a1" value="c">c) seinen … alten</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Das Kind spielt mit einem groß<b>__</b> Hund.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g2a2" value="a">a) -en</label>
+            <label><input type="radio" name="g2a2" value="b">b) -em</label>
+            <label><input type="radio" name="g2a2" value="c">c) -er</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>3. Sie fährt mit ihrer jung<b>__</b> Tochter nach Wien.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g2a3" value="a">a) -en</label>
+            <label><input type="radio" name="g2a3" value="b">b) -e</label>
+            <label><input type="radio" name="g2a3" value="c">c) -er</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>4. Ich wohne bei meinen lieb<b>__</b> Großeltern. （Plural, Dativ）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g2a4" value="a">a) -en</label>
+            <label><input type="radio" name="g2a4" value="b">b) -e</label>
+            <label><input type="radio" name="g2a4" value="c">c) -em</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>5. Das Geschenk kommt von einem gut<b>__</b> Freund.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g2a5" value="a">a) -en</label>
+            <label><input type="radio" name="g2a5" value="b">b) -em</label>
+            <label><input type="radio" name="g2a5" value="c">c) -er</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g2a')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g2a')">重置</button>
+      <div id="mcq-g2a-score"></div>
+
+      <!-- 2B 填空 5题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">2B · 填入正确的形容词词尾</div>
+      <ol class="fill-list" id="g2b-fill">
+        <li>1. Das ist die Frau mit dem kurz<input type="text" data-ans="en" style="min-width:50px"/> Haar.</li>
+        <li>2. Er kommt mit seinem klein<input type="text" data-ans="en" style="min-width:50px"/> Bruder.</li>
+        <li>3. Ich helfe meiner alt<input type="text" data-ans="en" style="min-width:50px"/> Nachbarin.</li>
+        <li>4. Das Paket liegt bei dem neu<input type="text" data-ans="en" style="min-width:50px"/> Nachbarn.</li>
+        <li>5. Sie schreibt mit ihrem schön<input type="text" data-ans="en" style="min-width:50px"/> Füller.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g2b-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g2b-fill')">重置</button>
+      <div id="g2b-fill-score"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题三：物主冠词第三格
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题三：物主冠词第三格（Possessivartikel im Dativ）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 11 章）</strong><br>
+        物主冠词第三格词尾与不定冠词相同：<br>
+        <table style="margin:.5rem 0 0">
+          <tr><th>物主冠词</th><th>阳/中性 Dativ</th><th>阴性 Dativ</th><th>复数 Dativ</th></tr>
+          <tr><td>mein-</td><td><em>meinem</em></td><td><em>meiner</em></td><td><em>meinen</em></td></tr>
+          <tr><td>dein-</td><td><em>deinem</em></td><td><em>deiner</em></td><td><em>deinen</em></td></tr>
+          <tr><td>sein-</td><td><em>seinem</em></td><td><em>seiner</em></td><td><em>seinen</em></td></tr>
+          <tr><td>ihr- (her)</td><td><em>ihrem</em></td><td><em>ihrer</em></td><td><em>ihren</em></td></tr>
+          <tr><td>unser-</td><td><em>unserem</em></td><td><em>unserer</em></td><td><em>unseren</em></td></tr>
+          <tr><td>Ihr- (formal)</td><td><em>Ihrem</em></td><td><em>Ihrer</em></td><td><em>Ihren</em></td></tr>
+        </table>
+      </div>
+
+      <!-- 3A 填空 6题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">3A · 填入正确的物主冠词（第三格）</div>
+      <div class="word-bank"><strong>提示：</strong>括号内为主格形式，请变为第三格。</div>
+      <ol class="fill-list" id="g3a-fill">
+        <li>1. Ich fahre mit <input type="text" data-ans="meinem"/> Vater nach Berlin. <span class="zh">（mein Vater — m.）</span></li>
+        <li>2. Er wohnt bei <input type="text" data-ans="seiner"/> Schwester. <span class="zh">（seine Schwester — f.）</span></li>
+        <li>3. Das Foto zeigt mich mit <input type="text" data-ans="meinen"/> Großeltern. <span class="zh">（meine Großeltern — Pl.）</span></li>
+        <li>4. Wir fahren mit <input type="text" data-ans="unserem"/> neuen Auto. <span class="zh">（unser Auto — n.）</span></li>
+        <li>5. Sie schreibt an <input type="text" data-ans="ihren"/> Eltern. <span class="zh">（ihre Eltern — Pl.）</span></li>
+        <li>6. Darf ich mit <input type="text" data-ans="Ihrem"/> Stift schreiben? <span class="zh">（Ihr Stift — formal, m.）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g3a-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g3a-fill')">重置</button>
+      <div id="g3a-fill-score"></div>
+
+      <!-- 3B 选择题 4题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">3B · 选择题</div>
+      <ul class="mcq-list" id="mcq-g3b">
+        <li class="mcq-item" data-ans="b">
+          <p>1. Das Buch gehört ________ Freundin. （seine Freundin）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g3b1" value="a">a) seinen</label>
+            <label><input type="radio" name="g3b1" value="b">b) seiner</label>
+            <label><input type="radio" name="g3b1" value="c">c) seinem</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>2. Ich gratuliere ________ Bruder zum Geburtstag. （mein Bruder）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g3b2" value="a">a) meinen</label>
+            <label><input type="radio" name="g3b2" value="b">b) meiner</label>
+            <label><input type="radio" name="g3b2" value="c">c) meinem</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>3. Er fährt mit ________ Kindern in den Urlaub. （seine Kinder — Pl.）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g3b3" value="a">a) seinen</label>
+            <label><input type="radio" name="g3b3" value="b">b) seinem</label>
+            <label><input type="radio" name="g3b3" value="c">c) seiner</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Können Sie mir ________ Ausweis zeigen? （Ihr Ausweis — formal, m.）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g3b4" value="a">a) Ihrer</label>
+            <label><input type="radio" name="g3b4" value="b">b) Ihren</label>
+            <label><input type="radio" name="g3b4" value="c">c) Ihrem</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g3b')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g3b')">重置</button>
+      <div id="mcq-g3b-score"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题四：第三格支配动词 + 人称代词
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题四：第三格支配动词 &amp; 人称代词（Verben + Dativ）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 22 章）</strong><br>
+        以下动词支配<strong>第三格宾语（Dativ-Objekt）</strong>，用 <strong>Wem?（给谁/对谁）</strong>提问：<br>
+        <table style="margin:.5rem 0 0">
+          <tr><th>动词</th><th>含义</th><th>例句</th></tr>
+          <tr><td><em>helfen</em></td><td>帮助</td><td>Ich helfe <em>dir</em>.</td></tr>
+          <tr><td><em>danken</em></td><td>感谢</td><td>Er dankt <em>ihr</em> für die Hilfe.</td></tr>
+          <tr><td><em>gehören</em></td><td>属于</td><td>Das Buch gehört <em>mir</em>.</td></tr>
+          <tr><td><em>gefallen</em></td><td>喜欢/合意</td><td>Das gefällt <em>ihm</em> sehr.</td></tr>
+          <tr><td><em>fehlen</em></td><td>缺少/想念</td><td>Du fehlst <em>mir</em>.</td></tr>
+          <tr><td><em>passen</em></td><td>合适</td><td>Das Kleid passt <em>ihr</em> gut.</td></tr>
+          <tr><td><em>schmecken</em></td><td>好吃/尝起来</td><td>Der Kuchen schmeckt <em>uns</em>.</td></tr>
+          <tr><td><em>gratulieren</em></td><td>祝贺</td><td>Wir gratulieren <em>ihnen</em>.</td></tr>
+        </table>
+        <br>
+        <strong>第三格人称代词：</strong>
+        ich→<em>mir</em> · du→<em>dir</em> · er→<em>ihm</em> · sie→<em>ihr</em> · es→<em>ihm</em> · wir→<em>uns</em> · ihr→<em>euch</em> · sie/Sie→<em>ihnen/Ihnen</em>
+      </div>
+
+      <!-- 4A 动词选择 5题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">4A · 选出正确的动词</div>
+      <ul class="mcq-list" id="mcq-g4a">
+        <li class="mcq-item" data-ans="c">
+          <p>1. Das Konzert ________ mir sehr gut. <span class="zh">（我很喜欢这场音乐会）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g4a1" value="a">a) schmeckt</label>
+            <label><input type="radio" name="g4a1" value="b">b) passt</label>
+            <label><input type="radio" name="g4a1" value="c">c) gefällt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Kannst du ________ bitte mit den Hausaufgaben helfen?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g4a2" value="a">a) mir</label>
+            <label><input type="radio" name="g4a2" value="b">b) mich</label>
+            <label><input type="radio" name="g4a2" value="c">c) ich</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>3. Diese Jacke ________ ihm nicht — sie ist zu groß.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g4a3" value="a">a) gefällt</label>
+            <label><input type="radio" name="g4a3" value="b">b) passt</label>
+            <label><input type="radio" name="g4a3" value="c">c) fehlt</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>4. Du ________ mir so sehr! <span class="zh">（我非常想念你）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g4a4" value="a">a) gefällst</label>
+            <label><input type="radio" name="g4a4" value="b">b) passt</label>
+            <label><input type="radio" name="g4a4" value="c">c) fehlst</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>5. Wir gratulieren ________ zum Geburtstag! （sie — Pl.）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g4a5" value="a">a) ihnen</label>
+            <label><input type="radio" name="g4a5" value="b">b) ihr</label>
+            <label><input type="radio" name="g4a5" value="c">c) sie</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g4a')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g4a')">重置</button>
+      <div id="mcq-g4a-score"></div>
+
+      <!-- 4B 代词填空 5题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">4B · 填入正确的第三格人称代词</div>
+      <div class="word-bank"><strong>词库：</strong> mir · dir · ihm · ihr · uns · euch · ihnen · Ihnen</div>
+      <ol class="fill-list" id="g4b-fill">
+        <li>1. Wie geht es <input type="text" data-ans="dir"/>? <span class="zh">（du）</span></li>
+        <li>2. Der Film hat <input type="text" data-ans="uns"/> sehr gut gefallen. <span class="zh">（wir）</span></li>
+        <li>3. Das Essen schmeckt <input type="text" data-ans="ihm"/> nicht. <span class="zh">（er）</span></li>
+        <li>4. Ich danke <input type="text" data-ans="Ihnen"/> herzlich für Ihre Hilfe. <span class="zh">（Sie — formal）</span></li>
+        <li>5. Kann ich <input type="text" data-ans="euch"/> etwas mitbringen? <span class="zh">（ihr）</span></li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g4b-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g4b-fill')">重置</button>
+      <div id="g4b-fill-score"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题五：情态动词过去时
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题五：情态动词过去时（Präteritum der Modalverben）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 52 章）</strong><br>
+        情态动词<strong>几乎只用过去时</strong>（Präteritum），不用 Perfekt！<br>
+        构成规则：去掉变音（Umlaut）+ 加 <strong>-te</strong> 词尾：<br>
+        <table style="margin:.5rem 0 0">
+          <tr><th>不定式</th><th>现在时</th><th>过去时词干</th><th>ich / er / sie</th><th>wir / sie / Sie</th></tr>
+          <tr><td>können</td><td>kann</td><td>konn-</td><td><em>konnte</em></td><td><em>konnten</em></td></tr>
+          <tr><td>müssen</td><td>muss</td><td>muss-</td><td><em>musste</em></td><td><em>mussten</em></td></tr>
+          <tr><td>wollen</td><td>will</td><td>woll-</td><td><em>wollte</em></td><td><em>wollten</em></td></tr>
+          <tr><td>dürfen</td><td>darf</td><td>durf-</td><td><em>durfte</em></td><td><em>durften</em></td></tr>
+          <tr><td>sollen</td><td>soll</td><td>soll-</td><td><em>sollte</em></td><td><em>sollten</em></td></tr>
+          <tr><td>mögen</td><td>mag</td><td>moch-</td><td><em>mochte</em></td><td><em>mochten</em></td></tr>
+        </table>
+        ⚠️ <strong>注意：</strong>ich konnte = er konnte（一三人称同形，无词尾 -t！）
+      </div>
+
+      <!-- 5A 填空变位 6题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">5A · 填入情态动词的过去时形式</div>
+      <ol class="fill-list" id="g5a-fill">
+        <li>1. Als Kind <input type="text" data-ans="durfte"/> (dürfen) sie nicht so lange fernsehen.</li>
+        <li>2. Wir <input type="text" data-ans="mussten"/> (müssen) lange auf den Zug warten.</li>
+        <li>3. Er <input type="text" data-ans="wollte"/> (wollen) Arzt werden, aber das Studium war zu schwer.</li>
+        <li>4. Ich <input type="text" data-ans="konnte"/> (können) gestern nicht schlafen.</li>
+        <li>5. Sie <input type="text" data-ans="sollte"/> (sollen) um 9 Uhr im Büro sein.</li>
+        <li>6. Früher <input type="text" data-ans="mochte"/> (mögen) er keinen Kaffee.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g5a-fill')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g5a-fill')">重置</button>
+      <div id="g5a-fill-score"></div>
+
+      <!-- 5B 选择题 5题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">5B · 选出正确的过去时形式</div>
+      <ul class="mcq-list" id="mcq-g5b">
+        <li class="mcq-item" data-ans="b">
+          <p>1. Letztes Jahr ________ wir nicht in Urlaub fahren, weil wir kein Geld hatten.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g5b1" value="a">a) können</label>
+            <label><input type="radio" name="g5b1" value="b">b) konnten</label>
+            <label><input type="radio" name="g5b1" value="c">c) könnten</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Als Kind ________ er immer früh aufstehen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g5b2" value="a">a) musste</label>
+            <label><input type="radio" name="g5b2" value="b">b) müsste</label>
+            <label><input type="radio" name="g5b2" value="c">c) muss</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>3. Sie ________ unbedingt nach Paris — der Flug war aber zu teuer.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g5b3" value="a">a) wollen</label>
+            <label><input type="radio" name="g5b3" value="b">b) wollten</label>
+            <label><input type="radio" name="g5b3" value="c">c) wollte</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>4. Damals ________ die Kinder nicht allein auf die Straße gehen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g5b4" value="a">a) dürfen</label>
+            <label><input type="radio" name="g5b4" value="b">b) durften</label>
+            <label><input type="radio" name="g5b4" value="c">c) dürften</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>5. Ich ________ den Bericht bis Freitag abgeben. <span class="zh">（应该，任务性）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g5b5" value="a">a) sollte</label>
+            <label><input type="radio" name="g5b5" value="b">b) sollten</label>
+            <label><input type="radio" name="g5b5" value="c">c) soll</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g5b')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g5b')">重置</button>
+      <div id="mcq-g5b-score"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       专题六：第二虚拟式（礼貌表达）
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">专题六：第二虚拟式——礼貌表达（Konjunktiv II）</div>
+    <div class="section-body">
+
+      <div class="rule-box">
+        <strong>📌 规则（Grammatik aktiv 第 65 章）</strong><br>
+        Konjunktiv II 用于<strong>礼貌请求、愿望、假设</strong>。A2 阶段重点掌握：<br>
+        <table style="margin:.5rem 0 0">
+          <tr><th>动词</th><th>Konjunktiv II</th><th>用法</th><th>例句</th></tr>
+          <tr><td>können</td><td><em>könnte(n)</em></td><td>礼貌请求</td><td><em>Könnten</em> Sie mir helfen?</td></tr>
+          <tr><td>mögen</td><td><em>möchte(n)</em></td><td>想要（礼貌）</td><td>Ich <em>möchte</em> bitte zahlen.</td></tr>
+          <tr><td>werden</td><td><em>würde(n)</em></td><td>替代式（通用）</td><td>Ich <em>würde</em> gern kommen.</td></tr>
+          <tr><td>haben</td><td><em>hätte(n)</em></td><td>礼貌要/有</td><td>Ich <em>hätte</em> gern einen Tee.</td></tr>
+          <tr><td>sein</td><td><em>wäre(n)</em></td><td>假设/虚拟</td><td>Es <em>wäre</em> schön.</td></tr>
+        </table>
+        ✅ <strong>记忆：</strong>礼貌语气首选 <em>könnten / möchte / würde</em>；<br>
+        hätte / wäre 用于愿望句（Ich hätte gern…）
+      </div>
+
+      <!-- 6A 礼貌改写 选择 5题 -->
+      <div style="font-weight:700;margin:.8rem 0 .4rem;color:var(--de);">6A · 礼貌表达——选出正确形式</div>
+      <ul class="mcq-list" id="mcq-g6a">
+        <li class="mcq-item" data-ans="b">
+          <p>1. ________ du mir bitte das Salz reichen? <span class="zh">（礼貌请求）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g6a1" value="a">a) Kannst</label>
+            <label><input type="radio" name="g6a1" value="b">b) Könntest</label>
+            <label><input type="radio" name="g6a1" value="c">c) Konntest</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>2. Ich ________ gern ein Stück Kuchen. <span class="zh">（我想要一块蛋糕）</span></p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g6a2" value="a">a) hätte</label>
+            <label><input type="radio" name="g6a2" value="b">b) habe</label>
+            <label><input type="radio" name="g6a2" value="c">c) hatte</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="c">
+          <p>3. Es ________ toll, wenn du mitkommen könntest.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g6a3" value="a">a) ist</label>
+            <label><input type="radio" name="g6a3" value="b">b) war</label>
+            <label><input type="radio" name="g6a3" value="c">c) wäre</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="a">
+          <p>4. ________ Sie mir bitte sagen, wo die Toilette ist?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g6a4" value="a">a) Könnten</label>
+            <label><input type="radio" name="g6a4" value="b">b) Konnten</label>
+            <label><input type="radio" name="g6a4" value="c">c) Können</label>
+          </div>
+        </li>
+        <li class="mcq-item" data-ans="b">
+          <p>5. Ich ________ gern einen Fensterplatz reservieren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="g6a5" value="a">a) wäre</label>
+            <label><input type="radio" name="g6a5" value="b">b) würde</label>
+            <label><input type="radio" name="g6a5" value="c">c) hätte</label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-g6a')">批改答案</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-g6a')">重置</button>
+      <div id="mcq-g6a-score"></div>
+
+      <!-- 6B 改写练习 填空 4题 -->
+      <div style="font-weight:700;margin:1.2rem 0 .4rem;color:var(--de);">6B · 礼貌改写（将直接句改为 Konjunktiv II）</div>
+      <div class="rule-box" style="margin-bottom:.8rem">
+        <strong>示例：</strong> Geben Sie mir bitte ein Glas Wasser. → <em>Könnten</em> Sie mir bitte ein Glas Wasser <em>geben</em>?
+      </div>
+      <ol class="fill-list" id="g6b-fill">
+        <li>1. Öffnen Sie bitte das Fenster.<br>→ <input type="text" data-ans="Könnten" style="min-width:100px"/> Sie bitte das Fenster öffnen?</li>
+        <li>2. Ich will einen Kaffee.<br>→ Ich <input type="text" data-ans="möchte" style="min-width:100px"/> gern einen Kaffee.</li>
+        <li>3. Erklären Sie mir den Weg zum Bahnhof.<br>→ <input type="text" data-ans="Könnten" style="min-width:100px"/> Sie mir den Weg zum Bahnhof erklären?</li>
+        <li>4. Ich will lieber zu Hause bleiben.<br>→ Ich <input type="text" data-ans="würde" style="min-width:100px"/> lieber zu Hause bleiben.</li>
+      </ol>
+      <button class="btn btn-check" onclick="checkFill('g6b-fill')">批改答案</button>
+      <button class="btn btn-show" onclick="toggleAns('g6b-ans')">显示答案</button>
+      <button class="btn btn-reset" onclick="resetFill('g6b-fill')">重置</button>
+      <div class="answer-box" id="g6b-ans">
+        <strong>参考答案：</strong><br>
+        1. Könnten Sie bitte das Fenster öffnen?<br>
+        2. Ich möchte gern einen Kaffee.<br>
+        3. Könnten Sie mir den Weg zum Bahnhof erklären?<br>
+        4. Ich würde lieber zu Hause bleiben.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       语法综合测试（10题）
+  ══════════════════════ -->
+  <div class="section">
+    <div class="section-header">🎯 语法综合测试（10题 · Grammatik aktiv 风格）</div>
+    <div class="section-body">
+      <ul class="mcq-list" id="mcq-gfinal">
+
+        <li class="mcq-item" data-ans="b">
+          <p>1. Ich bleibe zu Hause, weil ich ________.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf1" value="a">a) bin müde</label>
+            <label><input type="radio" name="gf1" value="b">b) müde bin</label>
+            <label><input type="radio" name="gf1" value="c">c) bin ich müde</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>2. Das ist der Mann mit dem lang________ Bart.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf2" value="a">a) -en</label>
+            <label><input type="radio" name="gf2" value="b">b) -em</label>
+            <label><input type="radio" name="gf2" value="c">c) -e</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>3. Ich fahre mit ________ Freundin nach Hamburg. （meine Freundin）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf3" value="a">a) meinen</label>
+            <label><input type="radio" name="gf3" value="b">b) meinem</label>
+            <label><input type="radio" name="gf3" value="c">c) meiner</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>4. Die Suppe schmeckt ________ sehr gut. （sie — Sg.）</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf4" value="a">a) sie</label>
+            <label><input type="radio" name="gf4" value="b">b) ihr</label>
+            <label><input type="radio" name="gf4" value="c">c) ihnen</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>5. Als Kind ________ er nicht so viel Schokolade essen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf5" value="a">a) durfte</label>
+            <label><input type="radio" name="gf5" value="b">b) dürfte</label>
+            <label><input type="radio" name="gf5" value="c">c) darf</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>6. ________ Sie mir bitte Ihren Ausweis zeigen?</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf6" value="a">a) Konnten</label>
+            <label><input type="radio" name="gf6" value="b">b) Können</label>
+            <label><input type="radio" name="gf6" value="c">c) Könnten</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>7. Wir ________ gestern sehr früh aufstehen, weil der Zug um 6 Uhr abfuhr.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf7" value="a">a) müssen</label>
+            <label><input type="radio" name="gf7" value="b">b) mussten</label>
+            <label><input type="radio" name="gf7" value="c">c) müssten</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="a">
+          <p>8. Ich ________ gern ein Zimmer für zwei Nächte reservieren.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf8" value="a">a) möchte</label>
+            <label><input type="radio" name="gf8" value="b">b) mochte</label>
+            <label><input type="radio" name="gf8" value="c">c) mögen</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="b">
+          <p>9. Das Buch ________ meiner Schwester — sie hat es vergessen.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf9" value="a">a) gefällt</label>
+            <label><input type="radio" name="gf9" value="b">b) gehört</label>
+            <label><input type="radio" name="gf9" value="c">c) fehlt</label>
+          </div>
+        </li>
+
+        <li class="mcq-item" data-ans="c">
+          <p>10. Es ________ schön, wenn wir uns öfter sehen könnten.</p>
+          <div class="mcq-options">
+            <label><input type="radio" name="gf10" value="a">a) ist</label>
+            <label><input type="radio" name="gf10" value="b">b) war</label>
+            <label><input type="radio" name="gf10" value="c">c) wäre</label>
+          </div>
+        </li>
+
+      </ul>
+      <button class="btn btn-check" onclick="checkMCQ('mcq-gfinal')">提交测试</button>
+      <button class="btn btn-reset" onclick="resetMCQ('mcq-gfinal')">重置</button>
+      <div id="mcq-gfinal-score"></div>
+    </div>
+  </div>
+
+</div><!-- /unit-4 -->
+
+</main>
+
+<script>
+// ── Tab switching ──
+function switchUnit(n) {
+  document.querySelectorAll('.unit').forEach((u,i) => u.classList.toggle('active', i===n));
+  document.querySelectorAll('nav button').forEach((b,i) => b.classList.toggle('active', i===n));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Toggle answer box ──
+function toggleAns(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+
+// ── Fill-in check ──
+function checkFill(listId) {
+  const list = document.getElementById(listId);
+  const inputs = list.querySelectorAll('input[type="text"]');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const userVal = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.ans.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (userVal === ans) { inp.classList.add('correct'); correct++; }
+    else if (userVal !== '') { inp.classList.add('wrong'); }
+  });
+  const scoreEl = document.getElementById(listId + '-score');
+  if (scoreEl) scoreEl.innerHTML = `<span class="score-badge">${correct} / ${inputs.length} 正确</span>`;
+}
+
+function resetFill(listId) {
+  const list = document.getElementById(listId);
+  list.querySelectorAll('input[type="text"]').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById(listId + '-score');
+  if (scoreEl) scoreEl.innerHTML = '';
+}
+
+// ── MCQ check ──
+function checkMCQ(listId) {
+  const list = document.getElementById(listId);
+  const items = list.querySelectorAll('.mcq-item');
+  let correct = 0;
+  items.forEach(item => {
+    const ans = item.dataset.ans;
+    const labels = item.querySelectorAll('label');
+    labels.forEach(label => {
+      label.classList.remove('correct-ans','wrong-ans','selected');
+      const radio = label.querySelector('input[type="radio"]');
+      if (radio.checked) {
+        label.classList.add('selected');
+        if (radio.value === ans) { label.classList.add('correct-ans'); correct++; }
+        else { label.classList.add('wrong-ans'); }
+      }
+      if (radio.value === ans) label.classList.add('correct-ans');
+    });
+  });
+  const scoreEl = document.getElementById(listId + '-score');
+  if (scoreEl) {
+    const pct = Math.round(correct / items.length * 100);
+    scoreEl.innerHTML = `<span class="score-badge">${correct} / ${items.length} &nbsp;(${pct}%)</span>`;
+  }
+}
+
+function resetMCQ(listId) {
+  const list = document.getElementById(listId);
+  list.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  list.querySelectorAll('label').forEach(l => l.classList.remove('correct-ans','wrong-ans','selected'));
+  const scoreEl = document.getElementById(listId + '-score');
+  if (scoreEl) scoreEl.innerHTML = '';
+}
+
+// ── Matching check ──
+function checkMatch(prefix, count) {
+  let correct = 0;
+  for (let i = 1; i <= count; i++) {
+    const sel = document.getElementById(`${prefix}-${i}`);
+    if (!sel) continue;
+    sel.style.borderColor = '';
+    if (sel.value === sel.dataset.ans) { sel.style.borderColor = 'var(--green)'; correct++; }
+    else if (sel.value !== '') { sel.style.borderColor = 'var(--red)'; }
+  }
+  const scoreEl = document.getElementById(`${prefix}-score`);
+  if (scoreEl) scoreEl.innerHTML = `<span class="score-badge">${correct} / ${count} 正确</span>`;
+}
+
+function resetMatch(prefix, count) {
+  for (let i = 1; i <= count; i++) {
+    const sel = document.getElementById(`${prefix}-${i}`);
+    if (!sel) continue;
+    sel.value = '';
+    sel.style.borderColor = '';
+  }
+  const scoreEl = document.getElementById(`${prefix}-score`);
+  if (scoreEl) scoreEl.innerHTML = '';
+}
+
+// ── Radio visual feedback on click ──
+document.querySelectorAll('.mcq-options label').forEach(label => {
+  label.addEventListener('click', () => {
+    const options = label.closest('.mcq-options').querySelectorAll('label');
+    options.forEach(l => l.classList.remove('selected'));
+    label.classList.add('selected');
+  });
+});
+</script>
+
+</body>
+</html>
