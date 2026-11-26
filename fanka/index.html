@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>教职工福利商城 · 演示原型</title>
+<style>
+:root{
+  --primary:#D8551F;
+  --primary-2:#B8430F;
+  --primary-soft:#FCEEE6;
+  --green:#1F6B54;
+  --green-soft:#E6F1ED;
+  --bg:#F3F1ED;
+  --card:#FFFFFF;
+  --ink:#25211D;
+  --muted:#8A827A;
+  --line:#EDE8E2;
+  --gold:#C99A3F;
+  --shadow:0 8px 30px rgba(37,33,29,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;overflow-x:hidden;}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",-apple-system,sans-serif;
+  background:#E7E3DC;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+img,svg{display:block;}
+a{color:inherit;text-decoration:none;}
+
+/* ---------- demo 控制条 ---------- */
+.demo-bar{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 18px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.demo-brand{font-size:13px;font-weight:700;letter-spacing:.3px;color:var(--ink);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.view-switch{flex:none;}
+.demo-brand span{color:var(--primary);}
+.view-switch{display:flex;background:#EFECE7;border-radius:10px;padding:3px;gap:2px;}
+.view-switch button{
+  font-size:12.5px;padding:6px 14px;border-radius:8px;color:var(--muted);font-weight:600;transition:.18s;
+}
+.view-switch button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+
+/* ---------- 手机外壳 ---------- */
+.stage{display:flex;justify-content:center;padding:26px 16px 60px;min-height:calc(100vh - 52px);}
+.phone{
+  width:100%;max-width:400px;
+  height:820px;max-height:calc(100vh - 120px);
+  background:var(--bg);
+  border-radius:38px;
+  box-shadow:0 30px 70px rgba(0,0,0,.22),0 0 0 10px #121212,0 0 0 12px #2a2a2a;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  transform:translateZ(0); /* 让固定定位以手机为容器 */
+}
+@media (max-width:520px){
+  .stage{padding:0;}
+  .phone{max-width:none;height:100vh;max-height:none;border-radius:0;box-shadow:none;}
+  .demo-bar{padding:8px 12px;}
+}
+
+/* 状态栏 */
+.statusbar{
+  height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;font-size:13px;font-weight:600;color:var(--ink);
+  background:transparent;position:relative;z-index:20;
+}
+.statusbar .right{display:flex;align-items:center;gap:6px;}
+.sig{display:flex;align-items:flex-end;gap:2px;height:11px;}
+.sig i{width:3px;background:var(--ink);border-radius:1px;display:block;}
+.sig i:nth-child(1){height:4px;} .sig i:nth-child(2){height:6px;}
+.sig i:nth-child(3){height:8px;} .sig i:nth-child(4){height:11px;}
+.batt{width:22px;height:11px;border:1.4px solid var(--ink);border-radius:3px;position:relative;padding:1.5px;}
+.batt::after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0;}
+.batt i{display:block;height:100%;width:72%;background:var(--ink);border-radius:1px;}
+
+/* 屏幕容器 */
+.screens{flex:1;position:relative;overflow:hidden;}
+.screen{
+  position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  background:var(--bg);
+  opacity:0;visibility:hidden;transform:translateY(6px);
+  transition:opacity .2s ease, transform .2s ease;
+  padding-bottom:12px;
+}
+.screen.active{opacity:1;visibility:visible;transform:none;}
+.screen::-webkit-scrollbar{width:0;}
+
+/* 导航栏 */
+.navbar{
+  position:sticky;top:0;z-index:15;height:46px;display:flex;align-items:center;
+  padding:0 12px;background:var(--bg);
+}
+.navbar.solid{background:#fff;border-bottom:1px solid var(--line);}
+.navbar .back{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;}
+.navbar .title{flex:1;text-align:center;font-size:16px;font-weight:700;}
+.navbar .right{width:34px;}
+
+/* ---------- 首页 ---------- */
+.home-hero{
+  padding:6px 16px 0;
+  background:linear-gradient(180deg,#FBE9DF 0%,var(--bg) 100%);
+  margin-top:-46px;padding-top:52px;
+}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.hero-school{display:flex;align-items:center;gap:9px;}
+.school-logo{
+  width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--green),#2E8A6C);
+  color:#fff;display:grid;place-items:center;font-size:15px;font-weight:800;
+}
+.hero-school .n{font-size:15px;font-weight:700;line-height:1.2;}
+.hero-school .s{font-size:11px;color:var(--muted);margin-top:2px;}
+.hero-bell{width:36px;height:36px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow);}
+
+/* 余额卡 */
+.balance-card{
+  background:linear-gradient(135deg,#20303C 0%,#2C4552 55%,#37606D 100%);
+  border-radius:18px;padding:16px 18px;color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 14px 30px rgba(32,48,60,.3);
+}
+.balance-card::before{
+  content:"";position:absolute;right:-30px;top:-40px;width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+}
+.bc-label{font-size:11.5px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px;}
+.bc-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:6px;}
+.bc-amt{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1;}
+.bc-amt small{font-size:15px;font-weight:600;margin-right:1px;opacity:.85;}
+.bc-detail{font-size:11.5px;background:rgba(255,255,255,.16);padding:5px 11px;border-radius:20px;color:#fff;}
+.bc-quota{
+  margin-top:13px;padding-top:11px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:rgba(255,255,255,.82);
+}
+.bc-quota b{color:#FFD9A8;font-size:14px;font-weight:700;}
+.bc-bar{height:5px;border-radius:3px;background:rgba(255,255,255,.18);margin-top:8px;overflow:hidden;}
+.bc-bar i{display:block;height:100%;width:21%;background:linear-gradient(90deg,#FFC97A,#FFB44D);border-radius:3px;}
+
+/* 金刚区 */
+.entries{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:18px 4px 6px;}
+.entry{display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0;}
+.entry .ic{
+  width:46px;height:46px;border-radius:15px;display:grid;place-items:center;font-size:22px;
+  background:#fff;box-shadow:0 4px 12px rgba(37,33,29,.06);
+}
+.entry .t{font-size:11px;color:#4A443E;font-weight:500;}
+
+/* 公告 */
+.notice{
+  margin:12px 16px 0;background:#fff;border-radius:12px;padding:9px 13px;display:flex;align-items:center;gap:9px;
+  box-shadow:0 2px 10px rgba(37,33,29,.05);
+}
+.notice .tag{font-size:10.5px;color:var(--primary);background:var(--primary-soft);padding:2px 7px;border-radius:5px;font-weight:700;flex:none;}
+.notice .txt{font-size:12px;color:#5B554E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* 限时福利 banner */
+.promo{
+  margin:14px 16px 0;border-radius:16px;overflow:hidden;position:relative;
+  background:linear-gradient(120deg,#F4A24C,#E4682A 60%,#D24E1C);
+  padding:15px 18px;color:#fff;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 10px 24px rgba(216,85,31,.28);
+}
+.promo .k{font-size:10.5px;background:rgba(255,255,255,.24);display:inline-block;padding:2px 8px;border-radius:5px;font-weight:600;}
+.promo h3{margin:6px 0 3px;font-size:18px;font-weight:800;letter-spacing:.5px;}
+.promo p{margin:0;font-size:11.5px;opacity:.9;}
+.promo .go{
+  flex:none;background:#fff;color:var(--primary);font-size:12px;font-weight:700;
+  padding:8px 15px;border-radius:20px;box-shadow:0 4px 12px rgba(0,0,0,.14);
+}
+
+/* 分区标题 */
+.sec-head{display:flex;align-items:center;justify-content:space-between;padding:20px 18px 10px;}
+.sec-head h3{margin:0;font-size:16.5px;font-weight:800;}
+.sec-head .more{font-size:12px;color:var(--muted);}
+
+/* 商品网格 */
+.goods{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 16px;}
+.gcard{
+  background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(37,33,29,.06);
+  transition:transform .12s ease;
+}
+.gcard:active{transform:scale(.97);}
+.gpic{
+  height:126px;display:grid;place-items:center;font-size:52px;position:relative;
+}
+.gpic .badge{
+  position:absolute;left:8px;top:8px;font-size:9.5px;font-weight:700;color:#fff;
+  background:var(--primary);padding:2px 7px;border-radius:20px;
+}
+.gpic .badge.green{background:var(--green);}
+.gbody{padding:9px 11px 12px;}
+.gname{font-size:13px;font-weight:600;line-height:1.35;height:36px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.gspec{font-size:10.5px;color:var(--muted);margin-top:4px;}
+.gprice{display:flex;align-items:baseline;justify-content:space-between;margin-top:8px;}
+.gprice .p{color:var(--primary);font-size:17px;font-weight:800;letter-spacing:-.3px;}
+.gprice .p small{font-size:11px;font-weight:600;}
+.gprice .add{
+  width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;
+  display:grid;place-items:center;font-size:19px;font-weight:400;line-height:1;box-shadow:0 4px 10px rgba(216,85,31,.35);
+}
+
+/* tabbar */
+.tabbar{
+  flex:none;height:64px;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);
+  padding-bottom:env(safe-area-inset-bottom);position:relative;z-index:20;
+}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#A9A29A;font-size:10px;position:relative;}
+.tab.on{color:var(--primary);}
+.tab svg{width:23px;height:23px;stroke-width:1.7;}
+.tab .dot{
+  position:absolute;top:7px;right:calc(50% - 18px);min-width:16px;height:16px;padding:0 4px;
+  background:var(--primary);color:#fff;font-size:10px;font-weight:700;border-radius:9px;
+  display:grid;place-items:center;
+}
+
+/* ---------- 通用内容卡 ---------- */
+.block{background:#fff;border-radius:14px;margin:12px 16px;padding:14px 16px;box-shadow:0 3px 12px rgba(37,33,29,.05);}
+.row{display:flex;align-items:center;justify-content:space-between;}
+.muted{color:var(--muted);}
+
+/* 分类页 */
+.cat-wrap{display:flex;height:100%;}
+.cat-side{width:92px;flex:none;background:#F7F5F2;overflow-y:auto;padding-bottom:20px;}
+.cat-side button{
+  width:100%;padding:15px 6px;font-size:13px;color:#6B645C;position:relative;font-weight:500;
+}
+.cat-side button.on{background:#fff;color:var(--primary);font-weight:700;}
+.cat-side button.on::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--primary);border-radius:0 3px 3px 0;}
+.cat-main{flex:1;overflow-y:auto;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;}
+.cat-main .gcard .gpic{height:104px;font-size:44px;}
+
+/* ---------- 商品详情 ---------- */
+.detail-pic{height:300px;display:grid;place-items:center;font-size:120px;position:relative;margin-top:-46px;padding-top:46px;}
+.detail-pic .dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:5px;}
+.detail-pic .dots i{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.18);}
+.detail-pic .dots i.on{background:var(--primary);width:14px;border-radius:3px;}
+.detail-body{background:#fff;border-radius:18px 18px 0 0;margin-top:-18px;position:relative;padding:18px 18px 24px;}
+.detail-price{display:flex;align-items:flex-end;gap:4px;color:var(--primary);}
+.detail-price .n{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.detail-price .n small{font-size:16px;}
+.detail-price .was{color:var(--muted);font-size:12.5px;text-decoration:line-through;margin-bottom:2px;}
+.detail-price .tag{margin-left:auto;font-size:10.5px;color:var(--green);border:1px solid var(--green);border-radius:4px;padding:1px 6px;margin-bottom:3px;}
+.detail-name{font-size:17px;font-weight:700;line-height:1.4;margin:12px 0 6px;}
+.detail-meta{display:flex;gap:16px;font-size:11.5px;color:var(--muted);}
+.spec-row{display:flex;align-items:center;gap:10px;padding:15px 0;border-top:1px solid var(--line);margin-top:14px;}
+.spec-row .lab{font-size:12.5px;color:var(--muted);width:44px;flex:none;}
+.chip{font-size:12.5px;padding:6px 14px;border-radius:8px;background:#F5F2EE;color:#5B554E;}
+.chip.on{background:var(--primary-soft);color:var(--primary);font-weight:700;box-shadow:inset 0 0 0 1px var(--primary);}
+.qty{display:flex;align-items:center;gap:0;margin-left:auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+.qty button{width:32px;height:30px;font-size:17px;color:#6B645C;background:#F8F6F3;}
+.qty span{width:40px;text-align:center;font-size:14px;font-weight:600;}
+.desc-title{font-size:14px;font-weight:800;margin:22px 0 8px;padding-left:9px;border-left:3px solid var(--primary);}
+.desc p{font-size:12.5px;color:#5B554E;line-height:1.85;margin:0 0 8px;}
+
+/* 底部操作条 */
+.action-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;height:70px;
+  background:rgba(255,255,255,.98);border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;padding:0 14px;padding-bottom:env(safe-area-inset-bottom);
+}
+.action-bar .ico-btn{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#6B645C;width:46px;flex:none;}
+.btn{flex:1;height:46px;border-radius:24px;font-size:15px;font-weight:700;display:grid;place-items:center;}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;box-shadow:0 8px 18px rgba(216,85,31,.32);}
+.btn.ghost{background:var(--primary-soft);color:var(--primary);}
+.btn.greenb{background:linear-gradient(135deg,#2A8567,var(--green));color:#fff;box-shadow:0 8px 18px rgba(31,107,84,.3);}
+
+/* ---------- 购物车 ---------- */
+.cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);}
+.cart-item:last-child{border-bottom:none;}
+.check{width:20px;height:20px;border-radius:50%;border:1.8px solid #CFC7BE;flex:none;display:grid;place-items:center;margin-top:26px;}
+.check.on{background:var(--primary);border-color:var(--primary);}
+.check.on::after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(0,-2px);}
+.ci-pic{width:76px;height:76px;border-radius:10px;display:grid;place-items:center;font-size:36px;flex:none;}
+.ci-info{flex:1;min-width:0;}
+.ci-name{font-size:13.5px;font-weight:600;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.ci-spec{font-size:11px;color:var(--muted);margin-top:3px;}
+.ci-bot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.ci-price{color:var(--primary);font-size:15px;font-weight:800;}
+.ci-price small{font-size:10.5px;}
+
+.empty{text-align:center;padding:70px 20px;color:var(--muted);}
+.empty .e{font-size:52px;opacity:.5;}
+.empty p{font-size:13px;margin:14px 0 20px;}
+
+/* 结算汇总条 */
+.checkout-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;height:66px;background:#fff;
+  border-top:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:12px;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.checkout-bar .sum{font-size:12px;color:var(--muted);}
+.checkout-bar .sum b{color:var(--primary);font-size:19px;font-weight:800;margin-left:2px;}
+.checkout-bar .btn{flex:none;width:130px;}
+.checkout-bar.above-tabbar{bottom:64px;border-radius:14px 14px 0 0;box-shadow:0 -6px 20px rgba(37,33,29,.08);}
+
+/* 确认订单 */
+.co-line{display:flex;align-items:center;justify-content:space-between;padding:13px 0;font-size:13.5px;border-bottom:1px solid var(--line);}
+.co-line:last-child{border-bottom:none;}
+.co-line .left{color:#5B554E;}
+.co-line .right{font-weight:600;}
+.pick-opt{display:flex;align-items:center;gap:11px;padding:12px;border-radius:11px;border:1.5px solid var(--line);margin-bottom:9px;}
+.pick-opt.on{border-color:var(--primary);background:var(--primary-soft);}
+.pick-opt .radio{width:18px;height:18px;border-radius:50%;border:1.8px solid #CFC7BE;flex:none;}
+.pick-opt.on .radio{border:5px solid var(--primary);}
+.pick-opt .pd{flex:1;}
+.pick-opt .pd .t{font-size:13.5px;font-weight:600;}
+.pick-opt .pd .s{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* 支付成功 */
+.success-wrap{padding:60px 26px 20px;text-align:center;}
+.success-ic{width:82px;height:82px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;background:var(--green-soft);}
+.success-ic svg{width:42px;height:42px;stroke:var(--green);stroke-width:2.6;}
+.success-wrap h2{font-size:20px;margin:0 0 8px;}
+.success-wrap .amt{font-size:15px;color:var(--muted);}
+.success-wrap .amt b{color:var(--ink);font-size:20px;}
+.pickcode{margin:26px auto 0;background:#fff;border-radius:18px;padding:22px 20px;box-shadow:var(--shadow);max-width:290px;}
+.pickcode .qr{width:170px;height:170px;margin:0 auto;}
+.pickcode .qr svg{width:100%;height:100%;}
+.pickcode .code{margin-top:14px;font-size:13px;color:var(--muted);letter-spacing:2px;font-weight:600;}
+.pickcode .where{margin-top:6px;font-size:12.5px;color:#5B554E;}
+.pickcode .warn{margin-top:14px;font-size:11px;color:var(--primary);background:var(--primary-soft);padding:8px 10px;border-radius:8px;line-height:1.5;}
+
+/* 订单 */
+.order-card{background:#fff;border-radius:14px;margin:12px 16px;padding:14px 16px;box-shadow:0 3px 12px rgba(37,33,29,.05);}
+.order-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:11px;border-bottom:1px solid var(--line);}
+.order-head .no{font-size:11.5px;color:var(--muted);}
+.order-status{font-size:12px;font-weight:700;}
+.order-status.wait{color:var(--primary);}
+.order-status.done{color:var(--green);}
+.order-goods{display:flex;gap:10px;padding:12px 0;}
+.order-goods .pic{width:56px;height:56px;border-radius:9px;display:grid;place-items:center;font-size:26px;flex:none;}
+.order-goods .nm{font-size:12.5px;line-height:1.4;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.order-foot{display:flex;align-items:center;justify-content:space-between;padding-top:11px;border-top:1px solid var(--line);}
+.order-foot .tot{font-size:12.5px;color:var(--muted);}
+.order-foot .tot b{color:var(--primary);font-size:16px;font-weight:800;}
+.mini-btn{font-size:12px;padding:6px 15px;border-radius:16px;border:1px solid var(--primary);color:var(--primary);font-weight:600;}
+
+/* 我的 */
+.mine-head{background:linear-gradient(160deg,#20303C,#37606D);padding:24px 20px 46px;color:#fff;position:relative;}
+.mine-user{display:flex;align-items:center;gap:13px;}
+.avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:24px;}
+.mine-user .nm{font-size:18px;font-weight:700;}
+.mine-user .dep{font-size:11.5px;color:rgba(255,255,255,.7);margin-top:3px;}
+.mine-stats{display:flex;margin-top:20px;background:rgba(255,255,255,.1);border-radius:14px;padding:14px 0;}
+.mine-stats .st{flex:1;text-align:center;position:relative;}
+.mine-stats .st+.st::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:24px;background:rgba(255,255,255,.18);}
+.mine-stats .n{font-size:19px;font-weight:800;}
+.mine-stats .l{font-size:10.5px;color:rgba(255,255,255,.7);margin-top:2px;}
+.mine-body{margin-top:-30px;padding:0 16px;}
+.menu-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;}
+.menu-row{display:flex;align-items:center;gap:13px;padding:15px 17px;border-bottom:1px solid var(--line);}
+.menu-row:last-child{border-bottom:none;}
+.menu-row .mi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;background:#F7F4F0;}
+.menu-row .mt{flex:1;font-size:14px;font-weight:500;}
+.menu-row .arrow{color:#C9C2B9;font-size:16px;}
+
+/* toast */
+.toast{
+  position:absolute;left:50%;bottom:150px;transform:translateX(-50%) translateY(10px);
+  background:rgba(37,33,29,.9);color:#fff;font-size:13px;padding:10px 20px;border-radius:22px;
+  opacity:0;transition:.22s;z-index:200;pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- 后台 ---------- */
+.admin{display:none;width:100%;max-width:1180px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);min-height:720px;}
+.admin.active{display:flex;}
+.admin-side{width:200px;flex:none;background:#20303C;color:#fff;padding:22px 0;}
+.admin-logo{display:flex;align-items:center;gap:10px;padding:0 20px 22px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:12px;}
+.admin-logo .lg{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--primary),#E4682A);display:grid;place-items:center;font-size:16px;font-weight:800;}
+.admin-logo .tx{font-size:13.5px;font-weight:700;line-height:1.3;}
+.admin-logo .tx small{display:block;font-size:10px;color:rgba(255,255,255,.55);font-weight:400;margin-top:2px;}
+.admin-nav button{display:flex;align-items:center;gap:11px;width:100%;padding:12px 22px;font-size:13px;color:rgba(255,255,255,.66);text-align:left;}
+.admin-nav button.on{background:rgba(255,255,255,.1);color:#fff;font-weight:600;box-shadow:inset 3px 0 0 var(--primary);}
+.admin-nav .ni{font-size:15px;}
+.admin-main{flex:1;background:#F5F4F1;overflow:auto;}
+.admin-top{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;background:#fff;border-bottom:1px solid var(--line);}
+.admin-top h2{margin:0;font-size:18px;}
+.admin-top .who{font-size:12px;color:var(--muted);}
+.admin-panel{display:none;padding:22px 26px;}
+.admin-panel.on{display:block;}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat-card{background:#fff;border-radius:13px;padding:17px 18px;box-shadow:0 2px 10px rgba(37,33,29,.05);}
+.stat-card .l{font-size:12px;color:var(--muted);}
+.stat-card .v{font-size:26px;font-weight:800;margin-top:6px;letter-spacing:-.5px;}
+.stat-card .v small{font-size:13px;font-weight:600;color:var(--muted);}
+.stat-card .d{font-size:11px;margin-top:5px;color:var(--green);}
+.stat-card .d.warn{color:var(--primary);}
+.panel-card{background:#fff;border-radius:13px;box-shadow:0 2px 10px rgba(37,33,29,.05);overflow:hidden;margin-bottom:18px;}
+.panel-card .ph{padding:15px 18px;border-bottom:1px solid var(--line);font-size:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+.panel-card .ph .link{font-size:12px;color:var(--primary);font-weight:600;}
+table.at{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.at th{text-align:left;padding:11px 18px;background:#FAF9F7;color:var(--muted);font-weight:600;font-size:11.5px;border-bottom:1px solid var(--line);}
+table.at td{padding:12px 18px;border-bottom:1px solid #F4F1ED;vertical-align:middle;}
+table.at tr:last-child td{border-bottom:none;}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
+.pill.wait{background:var(--primary-soft);color:var(--primary);}
+.pill.done{background:var(--green-soft);color:var(--green);}
+.pill.info{background:#EAF0F6;color:#3A6EA5;}
+.bar-chart{display:flex;align-items:flex-end;gap:14px;height:150px;padding:20px 24px 10px;}
+.bar-chart .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end;}
+.bar-chart .b i{width:100%;max-width:34px;background:linear-gradient(180deg,#F0A46A,#D8551F);border-radius:6px 6px 0 0;}
+.bar-chart .b .lab{font-size:10.5px;color:var(--muted);}
+.recon{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding:18px;}
+.recon-box{border:1px solid var(--line);border-radius:11px;padding:14px;}
+.recon-box .h{font-size:11.5px;color:var(--muted);}
+.recon-box .n{font-size:21px;font-weight:800;margin-top:5px;}
+.recon-box.ok{background:var(--green-soft);border-color:transparent;}
+.recon-box.ok .n{color:var(--green);}
+.tip{background:#FFF8EF;border:1px solid #EAD3B4;border-radius:10px;padding:12px 15px;font-size:12px;color:#8A5A20;line-height:1.6;margin:16px 26px;}
+.tip b{color:#B8430F;}
+
+@media print{.demo-bar{display:none;}.stage{padding:0;}.phone{box-shadow:none;height:auto;max-height:none;}}
+</style>
+</head>
+<body>
+
+<div class="demo-bar">
+  <div class="demo-brand">教职工福利商城 · <span>演示原型</span></div>
+  <div class="view-switch">
+    <button class="on" data-v="c">教职工端</button>
+    <button data-v="b">资产公司后台</button>
+  </div>
+</div>
+
+<div class="stage" id="stageC">
+<div class="phone">
+  <div class="statusbar">
+    <span>9:41</span>
+    <div class="right">
+      <span class="sig"><i></i><i></i><i></i><i></i></span>
+      <span style="font-size:11px;font-weight:600;">5G</span>
+      <span class="batt"><i></i></span>
+    </div>
+  </div>
+
+  <div class="screens" id="screens">
+
+    <!-- ============ 首页 ============ -->
+    <section class="screen active" data-s="home">
+      <div class="home-hero">
+        <div class="hero-top">
+          <div class="hero-school">
+            <div class="school-logo">福</div>
+            <div>
+              <div class="n">教职工福利商城</div>
+              <div class="s">资产管理公司 · 校园卡支付</div>
+            </div>
+          </div>
+          <div class="hero-bell">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B554E" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          </div>
+        </div>
+
+        <div class="balance-card">
+          <div class="bc-row" style="align-items:flex-start;">
+            <div>
+              <div class="bc-label">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                饭卡余额
+              </div>
+              <div class="bc-row" style="margin-top:6px;">
+                <div class="bc-amt"><small>¥</small>128.50</div>
+              </div>
+            </div>
+            <button class="bc-detail" onclick="toast('余额明细（演示）')">明细 ›</button>
+          </div>
+          <div class="bc-quota">
+            <span>本月福利额度剩余</span>
+            <b>¥471.50 <span style="font-size:10.5px;color:rgba(255,255,255,.6);font-weight:400;">/ 600</span></b>
+          </div>
+          <div class="bc-bar"><i></i></div>
+        </div>
+
+        <div class="entries">
+          <button class="entry" onclick="goCat('liangyou')"><span class="ic">🌾</span><span class="t">粮油米面</span></button>
+          <button class="entry" onclick="goCat('rihua')"><span class="ic">🧴</span><span class="t">日化清洁</span></button>
+          <button class="entry" onclick="goCat('rupin')"><span class="ic">🥛</span><span class="t">乳品饮品</span></button>
+          <button class="entry" onclick="goCat('lingshi')"><span class="ic">🥜</span><span class="t">休闲零食</span></button>
+          <button class="entry" onclick="show('orders')"><span class="ic">📦</span><span class="t">我的订单</span></button>
+        </div>
+      </div>
+
+      <div class="notice">
+        <span class="tag">公告</span>
+        <span class="txt">本周五中午 11:30–13:30 食堂一楼东侧集中提货</span>
+      </div>
+
+      <div class="promo" onclick="goCat('liangyou')">
+        <div>
+          <span class="k">福利专区</span>
+          <h3>粮油季 · 满 99 减 10</h3>
+          <p>福利额度可直接抵扣 · 食堂自提免运费</p>
+        </div>
+        <span class="go">去逛逛</span>
+      </div>
+
+      <div class="sec-head">
+        <h3>为你推荐</h3>
+        <span class="more">全部 ›</span>
+      </div>
+      <div class="goods" id="homeGoods"></div>
+      <div style="height:20px;"></div>
+    </section>
+
+    <!-- ============ 分类 ============ -->
+    <section class="screen" data-s="category">
+      <div class="navbar solid"><div class="title">全部分类</div></div>
+      <div class="cat-wrap" style="height:calc(100% - 46px);">
+        <div class="cat-side" id="catSide"></div>
+        <div class="cat-main" id="catMain"></div>
+      </div>
+    </section>
+
+    <!-- ============ 购物车 ============ -->
+    <section class="screen" data-s="cart">
+      <div class="navbar solid">
+        <div class="title">购物车</div>
+        <div class="right" style="text-align:right;font-size:12px;color:var(--muted);width:auto;" onclick="clearCart()">清空</div>
+      </div>
+      <div id="cartBody"></div>
+      <div style="height:90px;"></div>
+    </section>
+
+    <!-- ============ 我的 ============ -->
+    <section class="screen" data-s="mine">
+      <div class="mine-head">
+        <div class="mine-user">
+          <div class="avatar">👩‍🏫</div>
+          <div>
+            <div class="nm">李老师</div>
+            <div class="dep">高三年级组 · 工号 2031786</div>
+          </div>
+        </div>
+        <div class="mine-stats">
+          <div class="st"><div class="n" id="mineQuota">471.50</div><div class="l">福利额度</div></div>
+          <div class="st"><div class="n" id="mineBal">128.50</div><div class="l">饭卡余额</div></div>
+          <div class="st"><div class="n">3</div><div class="l">待提货</div></div>
+        </div>
+      </div>
+      <div class="mine-body">
+        <div class="menu-card">
+          <div class="menu-row" onclick="show('orders')"><span class="mi">📋</span><span class="mt">我的订单</span><span class="arrow">›</span></div>
+          <div class="menu-row" onclick="toast('提货点：食堂一楼东侧（演示）')"><span class="mi">📍</span><span class="mt">提货点与配送</span><span class="arrow">›</span></div>
+          <div class="menu-row" onclick="toast('消费明细（演示）')"><span class="mi">🧾</span><span class="mt">消费与额度明细</span><span class="arrow">›</span></div>
+        </div>
+        <div class="menu-card" style="margin-top:12px;">
+          <div class="menu-row" onclick="toast('客服电话：0791-8xxxxxx（演示）')"><span class="mi">🎧</span><span class="mt">联系客服</span><span class="arrow">›</span></div>
+          <div class="menu-row" onclick="toast('本商城由学校资产管理公司运营，校园卡结算')"><span class="mi">ℹ️</span><span class="mt">关于本商城</span><span class="arrow">›</span></div>
+        </div>
+        <p style="font-size:10.5px;color:var(--muted);text-align:center;margin:20px 0;line-height:1.7;">
+          对外经营与结算主体：学校资产管理公司<br>本商城不收取现金，仅支持校园卡（一卡通）结算
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 商品详情 ============ -->
+    <section class="screen" data-s="detail">
+      <div class="navbar"><div class="back" onclick="backFromDetail()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25211D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </div><div class="title"></div><div class="right"></div></div>
+      <div id="detailBody"></div>
+      <div class="action-bar">
+        <div class="ico-btn" onclick="toast('已加入收藏（演示）')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6B645C" stroke-width="1.7"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          收藏
+        </div>
+        <div class="ico-btn" onclick="show('cart')">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6B645C" stroke-width="1.7"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+          购物车
+        </div>
+        <button class="btn ghost" onclick="addCurrentToCart()">加入购物车</button>
+        <button class="btn primary" onclick="buyNow()">立即购买</button>
+      </div>
+    </section>
+
+    <!-- ============ 确认订单 ============ -->
+    <section class="screen" data-s="checkout">
+      <div class="navbar solid"><div class="back" onclick="show('cart')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25211D" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </div><div class="title">确认订单</div><div class="right"></div></div>
+      <div id="checkoutBody"></div>
+      <div style="height:86px;"></div>
+      <div class="checkout-bar">
+        <div class="sum">实付 <b id="coTotal">¥0.00</b></div>
+        <button class="btn primary" onclick="submitOrder()">提交订单</button>
+      </div>
+    </section>
+
+    <!-- ============ 支付成功 ============ -->
+    <section class="screen" data-s="success">
+      <div class="navbar solid"><div class="title">支付成功</div></div>
+      <div id="successBody"></div>
+    </section>
+
+    <!-- ============ 订单列表 ============ -->
+    <section class="screen" data-s="orders">
+      <div class="navbar solid"><div class="back" onclick="show('mine')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#25211D" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </div><div class="title">我的订单</div><div class="right"></div></div>
+      <div id="ordersBody"></div>
+    </section>
+
+  </div>
+
+  <nav class="tabbar" id="tabbar">
+    <button class="tab on" data-t="home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      首页
+    </button>
+    <button class="tab" data-t="category" onclick="switchTab('category')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      分类
+    </button>
+    <button class="tab" data-t="cart" onclick="switchTab('cart')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+      购物车
+      <span class="dot" id="cartDot" style="display:none;">0</span>
+    </button>
+    <button class="tab" data-t="mine" onclick="switchTab('mine')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      我的
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+</div>
+
+<!-- ================= 后台 ================= -->
+<div class="stage" id="stageB" style="display:none;align-items:flex-start;">
+<div class="admin active">
+  <aside class="admin-side">
+    <div class="admin-logo">
+      <div class="lg">福</div>
+      <div class="tx">福利商城运营后台<small>资产管理公司</small></div>
+    </div>
+    <nav class="admin-nav" id="adminNav">
+      <button class="on" data-p="dash"><span class="ni">📊</span>数据看板</button>
+      <button data-p="orders"><span class="ni">📦</span>订单管理</button>
+      <button data-p="goods"><span class="ni">🏷️</span>商品管理</button>
+      <button data-p="recon"><span class="ni">🧮</span>对账结算</button>
+      <button data-p="pickup"><span class="ni">📍</span>提货点</button>
+    </nav>
+  </aside>
+  <div class="admin-main">
+    <div class="admin-top">
+      <h2 id="adminTitle">数据看板</h2>
+      <div class="who">李老师 · 运营管理员　|　数据截至 11-26 09:41</div>
+    </div>
+
+    <!-- 数据看板 -->
+    <div class="admin-panel on" data-p="dash">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="l">今日订单</div><div class="v">86 <small>单</small></div><div class="d">↑ 较昨日 +12%</div></div>
+        <div class="stat-card"><div class="l">今日销售额</div><div class="v">¥5,240</div><div class="d">↑ 较昨日 +8.6%</div></div>
+        <div class="stat-card"><div class="l">待提货</div><div class="v">23 <small>单</small></div><div class="d warn">需今日处理</div></div>
+        <div class="stat-card"><div class="l">本月福利额度消耗</div><div class="v">68<small>%</small></div><div class="d">¥24,860 / ¥36,600</div></div>
+      </div>
+      <div class="panel-card">
+        <div class="ph">近 7 日销售额<span class="link">查看报表 ›</span></div>
+        <div class="bar-chart">
+          <div class="b"><i style="height:52%"></i><span class="lab">11/20</span></div>
+          <div class="b"><i style="height:64%"></i><span class="lab">11/21</span></div>
+          <div class="b"><i style="height:41%"></i><span class="lab">11/22</span></div>
+          <div class="b"><i style="height:38%"></i><span class="lab">11/23</span></div>
+          <div class="b"><i style="height:70%"></i><span class="lab">11/24</span></div>
+          <div class="b"><i style="height:78%"></i><span class="lab">11/25</span></div>
+          <div class="b"><i style="height:86%"></i><span class="lab">今日</span></div>
+        </div>
+      </div>
+      <div class="panel-card">
+        <div class="ph">热销商品 TOP5</div>
+        <table class="at">
+          <thead><tr><th>商品</th><th>销量</th><th>销售额</th><th>库存状态</th></tr></thead>
+          <tbody>
+            <tr><td>五常稻花香大米 5kg</td><td>142</td><td>¥8,508</td><td><span class="pill done">充足</span></td></tr>
+            <tr><td>金龙鱼花生油 5L</td><td>98</td><td>¥8,810</td><td><span class="pill wait">偏低</span></td></tr>
+            <tr><td>抽纸 3层 × 24包</td><td>87</td><td>¥3,471</td><td><span class="pill done">充足</span></td></tr>
+            <tr><td>伊利纯牛奶 250ml×24</td><td>76</td><td>¥3,792</td><td><span class="pill done">充足</span></td></tr>
+            <tr><td>中筋面粉 5kg</td><td>64</td><td>¥2,048</td><td><span class="pill done">充足</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 订单管理 -->
+    <div class="admin-panel" data-p="orders">
+      <div class="panel-card">
+        <div class="ph">订单列表<span class="link">导出 Excel ›</span></div>
+        <table class="at">
+          <thead><tr><th>订单号</th><th>下单人</th><th>商品</th><th>金额</th><th>提货方式</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr><td>FC112609412</td><td>李老师</td><td>五常大米 5kg ×1</td><td>¥59.90</td><td>食堂自提</td><td><span class="pill wait">待提货</span></td><td><span class="link" style="color:var(--primary);font-weight:600;">核销</span></td></tr>
+            <tr><td>FC112609355</td><td>王老师</td><td>花生油 5L + 抽纸 ×1</td><td>¥129.80</td><td>校内配送</td><td><span class="pill info">配送中</span></td><td><span style="color:var(--muted);">查看</span></td></tr>
+            <tr><td>FC112609301</td><td>张老师</td><td>伊利纯牛奶 ×2</td><td>¥99.80</td><td>食堂自提</td><td><span class="pill done">已提货</span></td><td><span style="color:var(--muted);">详情</span></td></tr>
+            <tr><td>FC112609244</td><td>陈老师</td><td>中筋面粉 5kg ×1</td><td>¥32.00</td><td>食堂自提</td><td><span class="pill done">已提货</span></td><td><span style="color:var(--muted);">详情</span></td></tr>
+            <tr><td>FC112609198</td><td>刘老师</td><td>坚果礼盒 ×1</td><td>¥68.00</td><td>校内配送</td><td><span class="pill wait">待提货</span></td><td><span class="link" style="color:var(--primary);font-weight:600;">核销</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 商品管理 -->
+    <div class="admin-panel" data-p="goods">
+      <div class="panel-card">
+        <div class="ph">商品管理<span class="link">+ 新增商品</span></div>
+        <table class="at">
+          <thead><tr><th>商品</th><th>分类</th><th>价格</th><th>库存</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>五常稻花香大米 5kg</td><td>粮油米面</td><td>¥59.90</td><td>320</td><td><span class="pill done">在售</span></td></tr>
+            <tr><td>金龙鱼花生油 5L</td><td>粮油米面</td><td>¥89.90</td><td>46</td><td><span class="pill done">在售</span></td></tr>
+            <tr><td>抽纸 3层 × 24包</td><td>日化清洁</td><td>¥39.90</td><td>210</td><td><span class="pill done">在售</span></td></tr>
+            <tr><td>伊利纯牛奶 250ml×24</td><td>乳品饮品</td><td>¥49.90</td><td>180</td><td><span class="pill done">在售</span></td></tr>
+            <tr><td>坚果礼盒（混合）</td><td>休闲零食</td><td>¥68.00</td><td>60</td><td><span class="pill wait">待补货</span></td></tr>
+            <tr><td>散装熟食拼盘</td><td>熟食</td><td>—</td><td>0</td><td><span class="pill" style="background:#F3EEF8;color:#7A5AA0;">暂停</span></td></tr>
+          </tbody>
+        </table>
+        <div class="tip" style="margin:0;border:none;border-top:1px solid var(--line);border-radius:0;">
+          <b>品类红线：</b>散装、生鲜、熟食等需要食品经营许可证，当前仅上架预包装食品；如需扩展熟食品类，须先由资产公司办齐资质再开放。
+        </div>
+      </div>
+    </div>
+
+    <!-- 对账结算 -->
+    <div class="admin-panel" data-p="recon">
+      <div class="panel-card">
+        <div class="ph">今日对账（2026-11-26）<span class="link">导出对账单 ›</span></div>
+        <div class="recon">
+          <div class="recon-box"><div class="h">校园卡扣款流水</div><div class="n">¥5,240.00</div></div>
+          <div class="recon-box"><div class="h">商城订单金额</div><div class="n">¥5,240.00</div></div>
+          <div class="recon-box ok"><div class="h">对账差异</div><div class="n">¥0.00 ✓</div></div>
+        </div>
+        <table class="at">
+          <thead><tr><th>时段</th><th>饭卡扣款</th><th>订单笔数</th><th>退款</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>00:00–12:00</td><td>¥3,180.00</td><td>52</td><td>¥0.00</td><td><span class="pill done">已平账</span></td></tr>
+            <tr><td>12:00–24:00</td><td>¥2,060.00</td><td>34</td><td>¥59.90</td><td><span class="pill wait">待日终</span></td></tr>
+          </tbody>
+        </table>
+        <div class="tip" style="margin:0;border:none;border-top:1px solid var(--line);border-radius:0;">
+          <b>资金路径：</b>校园卡扣款 → 资产公司账户 → 供应商结算。全程不经服务商账户；对账差异超过 ¥1 自动告警，需当日查明。
+        </div>
+      </div>
+    </div>
+
+    <!-- 提货点 -->
+    <div class="admin-panel" data-p="pickup">
+      <div class="panel-card">
+        <div class="ph">提货点配置<span class="link">+ 新增提货点</span></div>
+        <table class="at">
+          <thead><tr><th>提货点</th><th>位置</th><th>开放时间</th><th>今日待提</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>食堂一楼东侧</td><td>一食堂 1F 东门</td><td>工作日 11:30–13:30</td><td>16</td><td><span class="pill done">启用</span></td></tr>
+            <tr><td>办公楼保洁室</td><td>行政楼 B1</td><td>工作日 15:00–17:00</td><td>5</td><td><span class="pill done">启用</span></td></tr>
+            <tr><td>校内配送</td><td>送至办公室</td><td>下单后 24 小时内</td><td>2</td><td><span class="pill info">试行</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+/* ==================== 数据 ==================== */
+const CATS = {
+  liangyou:{name:'粮油米面',icon:'🌾'},
+  rihua:{name:'日化清洁',icon:'🧴'},
+  rupin:{name:'乳品饮品',icon:'🥛'},
+  lingshi:{name:'休闲零食',icon:'🥜'},
+};
+const PRODUCTS = [
+  {id:'p1',cat:'liangyou',name:'五常稻花香大米 5kg',spec:'5kg / 袋 · 东北五常产地',price:59.9,was:69.9,emoji:'🍚',g:'linear-gradient(135deg,#FBF3E6,#F3E2C7)',sales:1420,badge:'福利爆款',desc:'当季新米，颗粒饱满，蒸煮清香。产地直供，预包装食品，食堂集中提货。'},
+  {id:'p2',cat:'liangyou',name:'金龙鱼花生油 5L',spec:'5L / 桶 · 一级压榨',price:89.9,was:99.0,emoji:'🫗',g:'linear-gradient(135deg,#FCF0DC,#F5DFB8)',sales:980,badge:'满99减10',desc:'一级压榨花生油，浓香型。预包装食品，适合家庭日常烹饪。'},
+  {id:'p3',cat:'liangyou',name:'中筋面粉 5kg',spec:'5kg / 袋 · 家用馒头面条',price:32.0,was:38.0,emoji:'🌾',g:'linear-gradient(135deg,#FBF6EC,#F0E6CF)',sales:640,badge:'',desc:'中筋面粉，适合包子、馒头、面条、饺子。预包装食品。'},
+  {id:'p4',cat:'liangyou',name:'长粒香米 10kg',spec:'10kg / 袋 · 家庭装',price:108.0,was:128.0,emoji:'🍚',g:'linear-gradient(135deg,#F7F1E4,#EDE0C6)',sales:520,badge:'家庭装',desc:'长粒香米，10kg 家庭装，性价比更高。预包装食品。'},
+  {id:'p5',cat:'liangyou',name:'玉米油 5L',spec:'5L / 桶 · 非转基因',price:69.9,was:79.9,emoji:'🌽',g:'linear-gradient(135deg,#FCF6E0,#F2E6B5)',sales:410,badge:'',desc:'非转基因玉米油，清淡口感。预包装食品。'},
+  {id:'p6',cat:'liangyou',name:'手工挂面 900g×3',spec:'900g × 3 袋',price:25.9,was:29.9,emoji:'🍜',g:'linear-gradient(135deg,#FBF4EA,#F1E3CE)',sales:360,badge:'',desc:'手工细挂面，耐煮不糊。预包装食品。'},
+  {id:'p7',cat:'rihua',name:'抽纸 3层 × 24包',spec:'3层 × 24包 / 箱',price:39.9,was:49.9,emoji:'🧻',g:'linear-gradient(135deg,#EEF3F7,#DCE7F0)',sales:870,badge:'囤货必备',desc:'原生木浆，3层加厚，24包整箱。'},
+  {id:'p8',cat:'rihua',name:'洗衣液 3kg 补充装',spec:'3kg / 袋 · 薰衣草香',price:36.9,was:42.9,emoji:'🧴',g:'linear-gradient(135deg,#EAF1F7,#D8E6F2)',sales:610,badge:'',desc:'高效去渍，低泡易漂。'},
+  {id:'p9',cat:'rihua',name:'洗洁精 1.5kg×2',spec:'1.5kg × 2 瓶',price:29.9,was:35.9,emoji:'🧼',g:'linear-gradient(135deg,#EEF6F1,#DCEDE2)',sales:430,badge:'',desc:'柠檬去油，温和不伤手。'},
+  {id:'p10',cat:'rihua',name:'牙膏 180g×3',spec:'180g × 3 支',price:35.9,was:42.0,emoji:'🪥',g:'linear-gradient(135deg,#EEF3F9,#DAE6F3)',sales:320,badge:'',desc:'含氟防蛀，清新口气。'},
+  {id:'p11',cat:'rihua',name:'加厚垃圾袋 100 只',spec:'45×50cm × 100只',price:12.9,was:15.9,emoji:'🗑️',g:'linear-gradient(135deg,#F1F1F1,#E2E2E2)',sales:540,badge:'',desc:'加厚不易破，家用办公通用。'},
+  {id:'p12',cat:'rihua',name:'洗手液 500ml×2',spec:'500ml × 2 瓶',price:22.9,was:28.0,emoji:'🧴',g:'linear-gradient(135deg,#EDF6F4,#D9EDE8)',sales:280,badge:'',desc:'抑菌泡沫，温和清洁。'},
+  {id:'p13',cat:'rupin',name:'伊利纯牛奶 250ml×24',spec:'250ml × 24 盒 / 箱',price:49.9,was:59.9,emoji:'🥛',g:'linear-gradient(135deg,#EEF4FB,#DAE7F6)',sales:760,badge:'整箱更划算',desc:'3.2g 优质乳蛋白，整箱装。'},
+  {id:'p14',cat:'rupin',name:'酸奶 200g×12',spec:'200g × 12 杯',price:45.9,was:52.0,emoji:'🥛',g:'linear-gradient(135deg,#FBF1F5,#F2DCE6)',sales:390,badge:'',desc:'低温酸奶，多口味组合。'},
+  {id:'p15',cat:'rupin',name:'原味豆浆粉 600g',spec:'600g / 袋 · 30小包',price:19.9,was:24.9,emoji:'🥤',g:'linear-gradient(135deg,#FCF6E8,#F3E6C6)',sales:250,badge:'',desc:'非转基因黄豆研磨，冲泡即饮。'},
+  {id:'p16',cat:'lingshi',name:'每日坚果礼盒',spec:'30包 / 盒 · 混合果仁',price:68.0,was:88.0,emoji:'🥜',g:'linear-gradient(135deg,#FAF3E8,#F0E2CB)',sales:470,badge:'待补货',desc:'每日坚果 30 包，独立小包。'},
+  {id:'p17',cat:'lingshi',name:'苏打饼干 1kg',spec:'1kg / 箱 · 原味',price:16.9,was:19.9,emoji:'🍪',g:'linear-gradient(135deg,#FBF4E6,#F1E3C7)',sales:330,badge:'',desc:'酥脆苏打饼干，独立包装。'},
+  {id:'p18',cat:'lingshi',name:'山东红富士苹果 5kg',spec:'5kg / 箱 · 新鲜直发',price:45.0,was:55.0,emoji:'🍎',g:'linear-gradient(135deg,#FCEFE8,#F5D9C9)',sales:610,badge:'生鲜预售',desc:'山东红富士，5kg 整箱。生鲜类，需确认资质后开放。'},
+];
+
+const state = {
+  balance:128.50,
+  quota:600,
+  quotaUsed:128.50,
+  cart:{},          // id -> qty
+  currentId:null,
+  spec:'',
+  checkoutItems:[],
+  pickup:'self',
+  orders:[],
+  catSel:'liangyou',
+};
+
+/* ==================== 工具 ==================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const money = n => '¥' + n.toFixed(2);
+const prod = id => PRODUCTS.find(p=>p.id===id);
+const quotaLeft = () => state.quota - state.quotaUsed;
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+/* ==================== 屏幕切换 ==================== */
+const TAB_SCREENS = ['home','category','cart','mine'];
+function show(name){
+  $$('.screen').forEach(s=>s.classList.toggle('active', s.dataset.s===name));
+  const sc = document.querySelector(`.screen[data-s="${name}"]`);
+  if(sc) sc.scrollTop = 0;
+  // tab 高亮
+  $$('.tab').forEach(t=>t.classList.toggle('on', t.dataset.t===name));
+  if(TAB_SCREENS.includes(name)){
+    $('#stageC').querySelector('.phone').querySelector('.tabbar').style.display='grid';
+  } else {
+    $('#stageC').querySelector('.phone').querySelector('.tabbar').style.display='none';
+  }
+}
+function switchTab(t){ show(t); }
+function goCat(cat){ state.catSel=cat; renderCat(); show('category'); }
+function backFromDetail(){ show('home'); }
+
+/* ==================== 首页渲染 ==================== */
+function goodsCardHTML(p){
+  return `<div class="gcard" onclick="openDetail('${p.id}')">
+    <div class="gpic" style="background:${p.g}">${p.emoji}${p.badge?`<span class="badge ${p.badge.includes('补货')?'':'green'}">${p.badge}</span>`:''}</div>
+    <div class="gbody">
+      <div class="gname">${p.name}</div>
+      <div class="gspec">${p.spec.split('·')[0].trim()}</div>
+      <div class="gprice">
+        <span class="p"><small>¥</small>${p.price.toFixed(2)}</span>
+        <button class="add" onclick="event.stopPropagation();addToCart('${p.id}')">+</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderHome(){
+  const picks = ['p1','p2','p13','p7','p3','p16','p8','p4'];
+  $('#homeGoods').innerHTML = picks.map(id=>goodsCardHTML(prod(id))).join('');
+}
+
+/* ==================== 分类 ==================== */
+function renderCat(){
+  const side = $('#catSide');
+  side.innerHTML = Object.entries(CATS).map(([k,v])=>
+    `<button class="${k===state.catSel?'on':''}" onclick="state.catSel='${k}';renderCat()">${v.icon} ${v.name}</button>`
+  ).join('');
+  const list = PRODUCTS.filter(p=>p.cat===state.catSel);
+  $('#catMain').innerHTML = list.map(p=>goodsCardHTML(p)).join('');
+}
+
+/* ==================== 详情 ==================== */
+function openDetail(id){
+  const p = prod(id);
+  state.currentId = id; state.spec = 'standard';
+  $('#detailBody').innerHTML = `
+    <div class="detail-pic" style="background:${p.g}">${p.emoji}
+      <div class="dots"><i class="on"></i><i></i><i></i></div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-price">
+        <span class="n"><small>¥</small>${p.price.toFixed(2)}</span>
+        <span class="was">${money(p.was)}</span>
+        <span class="tag">饭卡支付</span>
+      </div>
+      <div class="detail-name">${p.name}</div>
+      <div class="detail-meta"><span>已售 ${p.sales}</span><span>库存充足</span><span>预包装食品</span></div>
+      <div class="spec-row">
+        <span class="lab">规格</span>
+        <span class="chip on" id="specStd">${p.spec.split('·')[0].trim()}</span>
+        <div class="qty">
+          <button onclick="stepQty(-1)">−</button><span id="qNum">1</span><button onclick="stepQty(1)">+</button>
+        </div>
+      </div>
+      <div class="desc-title">配送与提货</div>
+      <p style="font-size:12.5px;color:#5B554E;line-height:1.8;margin:0;">支持<b>食堂自提</b>（工作日 11:30–13:30）与<b>校内配送</b>（下单后 24 小时内送达办公室）。下单后凭提货码到提货点核销领取。</p>
+      <div class="desc-title">商品详情</div>
+      <p>${p.desc}</p>
+      <p style="color:var(--muted);font-size:11.5px;">本商品由学校资产管理公司对外经营，预包装食品销售备案范围内。售后与消费争议由资产公司作为第一责任人受理。</p>
+    </div>`;
+  state.detailQty = 1;
+  show('detail');
+}
+function stepQty(d){
+  state.detailQty = Math.max(1, (state.detailQty||1)+d);
+  $('#qNum').textContent = state.detailQty;
+}
+function addCurrentToCart(){
+  addToCart(state.currentId, state.detailQty||1);
+  show('cart');
+}
+function buyNow(){
+  const p = prod(state.currentId);
+  const q = state.detailQty||1;
+  state.checkoutItems = [{id:p.id,qty:q}];
+  renderCheckout();
+  show('checkout');
+}
+
+/* ==================== 购物车 ==================== */
+function addToCart(id, qty=1){
+  state.cart[id] = (state.cart[id]||0) + qty;
+  updateCartDot();
+  toast('已加入购物车');
+}
+function updateCartDot(){
+  const n = Object.values(state.cart).reduce((a,b)=>a+b,0);
+  const dot = $('#cartDot');
+  if(n>0){ dot.style.display='grid'; dot.textContent = n>99?'99+':n; }
+  else dot.style.display='none';
+}
+function changeCart(id, d){
+  state.cart[id] = (state.cart[id]||0) + d;
+  if(state.cart[id] <= 0) delete state.cart[id];
+  updateCartDot();
+  renderCart();
+}
+function clearCart(){ state.cart={}; updateCartDot(); renderCart(); toast('购物车已清空'); }
+
+function renderCart(){
+  const ids = Object.keys(state.cart);
+  const body = $('#cartBody');
+  if(ids.length===0){
+    body.innerHTML = `<div class="empty"><div class="e">🛒</div><p>购物车还是空的<br>去挑点粮油日用品吧</p>
+      <button class="btn primary" style="width:150px;margin:0 auto;height:42px;font-size:14px;" onclick="switchTab('home')">去逛逛</button></div>`;
+    return;
+  }
+  let total=0, count=0;
+  const items = ids.map(id=>{
+    const p = prod(id), q = state.cart[id];
+    total += p.price*q; count += q;
+    return `<div class="cart-item">
+      <div class="check on" onclick="changeCart('${id}',-999);"></div>
+      <div class="ci-pic" style="background:${p.g}">${p.emoji}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-spec">${p.spec.split('·')[0].trim()}</div>
+        <div class="ci-bot">
+          <span class="ci-price"><small>¥</small>${p.price.toFixed(2)}</span>
+          <div class="qty">
+            <button onclick="changeCart('${id}',-1)">−</button><span>${q}</span><button onclick="changeCart('${id}',1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  body.innerHTML = `<div class="block" style="margin-top:8px;">${items}</div>
+    <div class="checkout-bar above-tabbar">
+      <div class="sum">合计（${count} 件）<b>${money(total)}</b></div>
+      <button class="btn primary" onclick="checkoutSelected()">去结算</button>
+    </div>`;
+}
+function checkoutSelected(){
+  state.checkoutItems = Object.entries(state.cart).map(([id,qty])=>({id,qty}));
+  renderCheckout();
+  show('checkout');
+}
+
+/* ==================== 确认订单 ==================== */
+function renderCheckout(){
+  const items = state.checkoutItems;
+  let total=0;
+  const rows = items.map(it=>{
+    const p = prod(it.id);
+    total += p.price*it.qty;
+    return `<div class="order-goods" style="padding:10px 0;border-bottom:1px solid var(--line);">
+      <div class="pic" style="background:${p.g}">${p.emoji}</div>
+      <div class="nm">${p.name}<div class="ci-spec">${p.spec.split('·')[0].trim()} × ${it.qty}</div></div>
+      <div style="font-weight:700;font-size:13px;color:var(--primary);">${money(p.price*it.qty)}</div>
+    </div>`;
+  }).join('');
+
+  const ql = quotaLeft();
+  const useQuota = Math.min(ql, total);
+  const useBalance = Math.max(0, total - ql);
+
+  $('#checkoutBody').innerHTML = `
+    <div class="block">
+      <div class="co-line" style="padding-top:4px;"><span class="left">提货方式</span><span class="right" style="color:var(--primary);">${state.pickup==='self'?'食堂自提':'校内配送'}</span></div>
+      <div style="padding:10px 0 4px;">
+        <div class="pick-opt ${state.pickup==='self'?'on':''}" onclick="state.pickup='self';renderCheckout()">
+          <span class="radio"></span>
+          <div class="pd"><div class="t">食堂自提 · 免运费</div><div class="s">一食堂 1F 东侧 · 工作日 11:30–13:30</div></div>
+        </div>
+        <div class="pick-opt ${state.pickup==='deliver'?'on':''}" style="margin-bottom:0;" onclick="state.pickup='deliver';renderCheckout()">
+          <span class="radio"></span>
+          <div class="pd"><div class="t">校内配送 · ¥0（本项目试行）</div><div class="s">下单后 24 小时内送至办公室</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="desc-title" style="margin-top:0;">商品清单</div>
+      ${rows}
+    </div>
+
+    <div class="block">
+      <div class="co-line"><span class="left">商品金额</span><span class="right">${money(total)}</span></div>
+      <div class="co-line"><span class="left">运费</span><span class="right">¥0.00</span></div>
+      <div class="co-line" style="align-items:flex-start;">
+        <span class="left">支付方式</span>
+        <span class="right" style="text-align:right;">
+          <span style="color:var(--green);font-weight:700;">校园卡（饭卡）</span>
+          <div style="font-size:11px;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.6;">
+            福利额度抵扣 ${money(useQuota)}（剩 ${money(ql)}）<br>
+            饭卡余额支付 ${money(useBalance)}（余 ${money(state.balance)}）
+          </div>
+        </span>
+      </div>
+    </div>
+    <p style="font-size:10.5px;color:var(--muted);text-align:center;line-height:1.7;padding:0 24px;">
+      本订单通过校园卡结算，不涉及微信/支付宝等第三方支付。<br>对外经营与结算主体为学校资产管理公司。
+    </p>
+    <div style="height:80px;"></div>`;
+
+  $('#coTotal').textContent = money(total);
+  state._coTotal = total;
+  state._coUseQuota = useQuota;
+  state._coUseBalance = useBalance;
+}
+
+/* ==================== 提交订单 ==================== */
+function submitOrder(){
+  const total = state._coTotal || 0;
+  if(total<=0){ toast('订单为空'); return; }
+  // 扣款：额度优先，余额补足
+  const useQuota = state._coUseQuota || 0;
+  const useBalance = state._coUseBalance || 0;
+  if(useBalance > state.balance){ toast('饭卡余额不足，请先充值'); return; }
+  state.quotaUsed += useQuota;
+  state.balance -= useBalance;
+
+  const no = 'FC' + Date.now().toString().slice(-9);
+  const order = {
+    no, total, useQuota, useBalance,
+    pickup: state.pickup,
+    items: state.checkoutItems.map(it=>({id:it.id,qty:it.qty})),
+    status:'wait',
+    time: new Date(),
+    code: 'PK-' + Math.random().toString(36).slice(2,8).toUpperCase(),
+  };
+  state.orders.unshift(order);
+  state.cart = {};
+  updateCartDot();
+  renderSuccess(order);
+  show('success');
+}
+
+/* ==================== 支付成功 + 提货码 ==================== */
+function qrSVG(seedStr){
+  let h = 0;
+  for(const ch of seedStr) h = (h*131 + ch.charCodeAt(0)) % 233280;
+  const rnd = ()=>{ h = (h*9301+49297)%233280; return h/233280; };
+  const n=21; let cells='';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+    const inFinder = (x<7&&y<7)||(x>=n-7&&y<7)||(x<7&&y>=n-7);
+    let on;
+    if(inFinder){
+      const fx = x<7?x:x-(n-7); const fy = y<7?y:y-(n-7);
+      const edge = fx===0||fx===6||fy===0||fy===6;
+      const inner = fx>=2&&fx<=4&&fy>=2&&fy<=4;
+      on = edge||inner;
+    } else { on = rnd()>0.5; }
+    if(on) cells += `<rect x="${x}" y="${y}" width="1" height="1" rx="0.1"/>`;
+  }
+  return `<svg viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><rect width="21" height="21" fill="#fff"/><g fill="#1a1a1a">${cells}</g></svg>`;
+}
+function renderSuccess(order){
+  const where = order.pickup==='self' ? '一食堂 1F 东侧提货点' : '送至您的办公室（配送中）';
+  $('#successBody').innerHTML = `
+    <div class="success-wrap">
+      <div class="success-ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2>支付成功</h2>
+      <div class="amt">已从校园卡扣款 <b>${money(order.total)}</b></div>
+      <div class="pickcode">
+        <div class="qr">${qrSVG(order.code)}</div>
+        <div class="code">提货码 ${order.code}</div>
+        <div class="where">${where}</div>
+        <div class="warn">请到提货点出示此码核销领取。<br>自提订单 7 日内未领取将自动退款至校园卡。</div>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:24px;">
+        <button class="btn ghost" onclick="show('orders')">查看订单</button>
+        <button class="btn primary" onclick="switchTab('home')">继续逛</button>
+      </div>
+    </div>`;
+}
+
+/* ==================== 订单列表 ==================== */
+function renderOrders(){
+  const body = $('#ordersBody');
+  if(state.orders.length===0){
+    body.innerHTML = `<div class="empty"><div class="e">📦</div><p>还没有订单<br>下单后可在这里查看提货码</p></div>`;
+    return;
+  }
+  body.innerHTML = state.orders.map(o=>{
+    const first = prod(o.items[0].id);
+    const more = o.items.length>1 ? ` 等 ${o.items.length} 件` : '';
+    const st = o.status==='wait'
+      ? '<span class="order-status wait">待提货</span>'
+      : '<span class="order-status done">已提货</span>';
+    return `<div class="order-card">
+      <div class="order-head"><span class="no">订单号 ${o.no}</span>${st}</div>
+      <div class="order-goods">
+        <div class="pic" style="background:${first.g}">${first.emoji}</div>
+        <div class="nm">${first.name}${more}</div>
+      </div>
+      <div class="order-foot">
+        <span class="tot">实付 <b>${money(o.total)}</b></span>
+        <button class="mini-btn" onclick="reShowCode('${o.no}')">查看提货码</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function reShowCode(no){
+  const o = state.orders.find(x=>x.no===no);
+  if(o){ renderSuccess(o); show('success'); }
+}
+
+/* ==================== 我的页余额同步 ==================== */
+function syncMine(){
+  $('#mineQuota').textContent = quotaLeft().toFixed(2);
+  $('#mineBal').textContent = state.balance.toFixed(2);
+}
+
+/* ==================== 视角切换 ==================== */
+$$('.view-switch button').forEach(btn=>{
+  btn.onclick = ()=>{
+    $$('.view-switch button').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    const v = btn.dataset.v;
+    $('#stageC').style.display = v==='c'?'flex':'none';
+    $('#stageB').style.display = v==='b'?'flex':'none';
+  };
+});
+
+/* ==================== 后台导航 ==================== */
+$$('#adminNav button').forEach(btn=>{
+  btn.onclick = ()=>{
+    $$('#adminNav button').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    const p = btn.dataset.p;
+    $$('.admin-panel').forEach(el=>el.classList.toggle('on', el.dataset.p===p));
+    const titles = {dash:'数据看板',orders:'订单管理',goods:'商品管理',recon:'对账结算',pickup:'提货点'};
+    $('#adminTitle').textContent = titles[p]||'';
+  };
+});
+
+/* ==================== 初始化 ==================== */
+function refreshAll(){
+  renderHome();
+  renderCat();
+  renderCart();
+  renderOrders();
+  syncMine();
+  updateCartDot();
+}
+refreshAll();
+show('home');
+// 每次进入订单页刷新
+const _origShow = show;
+show = function(name){
+  if(name==='orders') renderOrders();
+  if(name==='mine') syncMine();
+  if(name==='cart') renderCart();
+  _origShow(name);
+};
+</script>
+</body>
+</html>
